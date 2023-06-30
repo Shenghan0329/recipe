@@ -9,7 +9,8 @@ const Method = {
   "BAKE": "BAKE",
   "SQUEEZE": "SQUEEZE",
   "SAUTE": "SAUTE",
-  "OTHERS": "OTHERS"
+  "OTHERS": "OTHERS",
+  "STIR": "STIR"
 };
 
 const { User, Recipes, Measure, Ingredient } = initSchema(schema);

@@ -9,17 +9,18 @@ export enum Method {
   BAKE = "BAKE",
   SQUEEZE = "SQUEEZE",
   SAUTE = "SAUTE",
-  OTHERS = "OTHERS"
+  OTHERS = "OTHERS",
+  STIR = "STIR"
 }
 
 type EagerMeasure = {
-  readonly picture?: string | null;
+  readonly picture?: (string | null)[] | null;
   readonly step: string;
   readonly des: string;
 }
 
 type LazyMeasure = {
-  readonly picture?: string | null;
+  readonly picture?: (string | null)[] | null;
   readonly step: string;
   readonly des: string;
 }
@@ -29,13 +30,13 @@ export declare type Measure = LazyLoading extends LazyLoadingDisabled ? EagerMea
 export declare const Measure: (new (init: ModelInit<Measure>) => Measure)
 
 type EagerIngredient = {
-  readonly weight?: number | null;
+  readonly weight?: string | null;
   readonly name: string;
   readonly imgUrl?: string | null;
 }
 
 type LazyIngredient = {
-  readonly weight?: number | null;
+  readonly weight?: string | null;
   readonly name: string;
   readonly imgUrl?: string | null;
 }
@@ -92,7 +93,7 @@ type EagerRecipes = {
   readonly level?: string | null;
   readonly peopleNum?: number | null;
   readonly taste?: string | null;
-  readonly cookTime?: number | null;
+  readonly cookTime?: string | null;
   readonly mainIngredient?: Ingredient[] | null;
   readonly accessories?: (Ingredient | null)[] | null;
   readonly measure?: Measure[] | null;
@@ -119,7 +120,7 @@ type LazyRecipes = {
   readonly level?: string | null;
   readonly peopleNum?: number | null;
   readonly taste?: string | null;
-  readonly cookTime?: number | null;
+  readonly cookTime?: string | null;
   readonly mainIngredient?: Ingredient[] | null;
   readonly accessories?: (Ingredient | null)[] | null;
   readonly measure?: Measure[] | null;

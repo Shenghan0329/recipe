@@ -159,7 +159,7 @@ export const schema = {
                 "cookTime": {
                     "name": "cookTime",
                     "isArray": false,
-                    "type": "Int",
+                    "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -292,7 +292,8 @@ export const schema = {
                 "BAKE",
                 "SQUEEZE",
                 "SAUTE",
-                "OTHERS"
+                "OTHERS",
+                "STIR"
             ]
         }
     },
@@ -302,10 +303,11 @@ export const schema = {
             "fields": {
                 "picture": {
                     "name": "picture",
-                    "isArray": false,
+                    "isArray": true,
                     "type": "String",
                     "isRequired": false,
-                    "attributes": []
+                    "attributes": [],
+                    "isArrayNullable": true
                 },
                 "step": {
                     "name": "step",
@@ -329,7 +331,7 @@ export const schema = {
                 "weight": {
                     "name": "weight",
                     "isArray": false,
-                    "type": "Int",
+                    "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -351,5 +353,5 @@ export const schema = {
         }
     },
     "codegenVersion": "3.4.4",
-    "version": "cd80eb977a9339824592f4e90b7b650b"
+    "version": "5b0a52ed85473dd584340abfce0a49d8"
 };

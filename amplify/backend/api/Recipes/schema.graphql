@@ -14,16 +14,17 @@ enum Method {
   SQUEEZE
   SAUTE
   OTHERS
+  STIR
 }
 
 type Measure {
-  picture: String
+  picture: [String]
   step: String!
   des: String!
 }
 
 type Ingredient {
-  weight: Int
+  weight: String
   name: String!
   imgUrl: String
 }
@@ -38,7 +39,7 @@ type Recipes @model @auth(rules: [{allow: public}]) {
   level: String
   peopleNum: Int
   taste: String
-  cookTime: Int
+  cookTime: String
   mainIngredient: [Ingredient!]
   accessories: [Ingredient]
   measure: [Measure!]
