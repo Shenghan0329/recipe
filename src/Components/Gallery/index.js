@@ -12,7 +12,6 @@ const contentStyle = {
 const Gallery = ({ data = recipes, galleryItem = GalleryCard }) => (
   <Carousel autoplay>
     {data.map((item, index) => {
-      console.log(item);
       return <div style={contentStyle}>{galleryItem(item)};</div>;
     })}
   </Carousel>

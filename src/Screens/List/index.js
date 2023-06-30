@@ -6,7 +6,7 @@ const { Title } = Typography;
 const List = () => {
   return (
     <>
-      <Title level={2}>Meat</Title>
+      <Title level={2}>Recipes</Title>
       <RecipeList pageSize={60} />
     </>
   );

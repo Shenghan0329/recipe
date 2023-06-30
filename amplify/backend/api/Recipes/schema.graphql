@@ -1,0 +1,51 @@
+type User @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  image: String
+  introduce: String
+  Recipes: [Recipes] @hasMany(indexName: "byUser", fields: ["id"])
+}
+
+enum Method {
+  FRY
+  BOIL
+  STEAM
+  BAKE
+  SQUEEZE
+  SAUTE
+  OTHERS
+}
+
+type Measure {
+  picture: String
+  step: String!
+  des: String!
+}
+
+type Ingredient {
+  weight: Int
+  name: String!
+  imgUrl: String
+}
+
+type Recipes @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  meauID: Int!
+  name: String!
+  tags: [String]
+  img: String!
+  url: String!
+  level: String
+  peopleNum: Int
+  taste: String
+  cookTime: Int
+  mainIngredient: [Ingredient!]
+  accessories: [Ingredient]
+  measure: [Measure!]
+  techniques: String
+  scrapyTime: AWSDateTime
+  method: Method
+  userID: ID! @index(name: "byUser")
+  prepareTime: String
+}
+ 

@@ -1,26 +1,23 @@
 import { List } from "antd";
 import { useState, useEffect } from "react";
+import filter from "../../../Helpers/filter";
+const f = filter;
 
-const FlatList = ({ data, listItem, pageSize = 6, filters = {} }) => {
+const FlatList = ({
+  data = [],
+  listItem,
+  pageSize = 6,
+  filters = {},
+  link,
+}) => {
   // data should be in the form [{title:...},...]
   // Every listItem component should always have item as props
   const [filter, setFilter] = useState({});
   const [listData, setListData] = useState(data);
   useEffect(() => {
     setFilter(filters);
-    const filteredData = [];
-    for (let i = 0; i < data.length; i++) {
-      let valid = true;
-      for (const key of Object.keys(filters)) {
-        if (data[i][key] !== filters[key]) {
-          valid = false;
-          continue;
-        }
-      }
-      if (valid === true) filteredData.push(data[i]);
-    }
+    const filteredData = f(data, filters);
     setListData(filteredData);
-    console.log(filter);
   }, []);
 
   return (
