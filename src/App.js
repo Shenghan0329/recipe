@@ -1,21 +1,23 @@
 import Router from "./Router";
 import { Layout } from "antd";
 import { BrowserRouter } from "react-router-dom";
-import Head from "./Layout/Head";
-import Foot from "./Layout/Foot";
 import { Amplify } from "aws-amplify";
 import config from "./aws-exports";
-import setDefaultUser from "./data/conversion";
-import { convertOne, cToE } from "./data/conversion";
+import Head from "./Layout/Head";
+import Home from "./Screens/Home";
+import Foot from "./Layout/Foot";
+// import DataContextProvider from "./Contexts/DataContext";
+
 Amplify.configure(config);
 
 const { Content } = Layout;
 
-setDefaultUser();
-convertOne();
-cToE(
-  "打发蛋白时要注意，打蛋器的头不要只定在一点，手拿着打蛋器匀速画圈，这样打出的蛋白才会均匀。"
-);
+// const str = await cToE({
+//   A: [{ a: "早" }, { b: "晚" }],
+//   B: [{ c: "早" }, { d: "晚" }],
+// });
+// console.log(str);
+
 const App = () => {
   return (
     <BrowserRouter>
@@ -27,7 +29,8 @@ const App = () => {
             width: "70%",
           }}
         >
-          <Router />
+          {/* <Router /> */}
+          <Home />
         </Content>
         <Foot />
       </Layout>

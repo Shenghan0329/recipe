@@ -1,16 +1,8 @@
-import recipes from "../../../data/recipes.json";
 import FlatList from "../FlatList";
 import RecipeCard from "../../Card/RecipeCard";
 
-const RecipeList = ({ pageSize, filters }) => {
-  return (
-    <FlatList
-      data={recipes}
-      listItem={RecipeCard}
-      pageSize={pageSize}
-      filters={filters}
-    />
-  );
+const RecipeList = ({ data, pageSize }) => {
+  return <FlatList data={data} listItem={RecipeCard} pageSize={pageSize} />;
 };
 
 export default RecipeList;

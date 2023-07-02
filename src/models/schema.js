@@ -320,7 +320,7 @@ export const schema = {
                     "name": "des",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 }
             }
@@ -353,5 +353,5 @@ export const schema = {
         }
     },
     "codegenVersion": "3.4.4",
-    "version": "5b0a52ed85473dd584340abfce0a49d8"
+    "version": "ee9423daa883e3a8dbd43984fc05175c"
 };

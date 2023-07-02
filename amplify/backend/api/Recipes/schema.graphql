@@ -20,7 +20,7 @@ enum Method {
 type Measure {
   picture: [String]
   step: String!
-  des: String!
+  des: String
 }
 
 type Ingredient {

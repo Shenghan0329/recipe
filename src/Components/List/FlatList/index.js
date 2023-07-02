@@ -1,25 +1,20 @@
-import { List } from "antd";
-import { useState, useEffect } from "react";
+import { List, Button } from "antd";
+import { useState, useEffect, useRef } from "react";
+import { DataStore } from "aws-amplify/lib-esm";
+import { Recipes } from "../../../models";
 import filter from "../../../Helpers/filter";
 const f = filter;
 
-const FlatList = ({
-  data = [],
-  listItem,
-  pageSize = 6,
-  filters = {},
-  link,
-}) => {
+const FlatList = ({ data = [], listItem, pageSize = 6, filters = {} }) => {
+  const [listData, setListData] = useState([]);
+
+  useEffect(() => {
+    DataStore.query(Recipes).then((results) => setListData(results));
+  }, []);
   // data should be in the form [{title:...},...]
   // Every listItem component should always have item as props
-  const [filter, setFilter] = useState({});
-  const [listData, setListData] = useState(data);
-  useEffect(() => {
-    setFilter(filters);
-    const filteredData = f(data, filters);
-    setListData(filteredData);
-  }, []);
 
+  console.log(listData, data);
   return (
     <List
       grid={{
@@ -32,11 +27,26 @@ const FlatList = ({
         xxl: 3,
       }}
       dataSource={listData}
-      renderItem={(item) => <List.Item>{listItem(item)}</List.Item>}
+      renderItem={(item) => (
+        <List.Item>
+          <Button
+            type="text"
+            href={"recipes/" + item.id}
+            style={{
+              width: "100%",
+              height: "auto",
+              padding: 0,
+              margin: 0,
+            }}
+          >
+            {listItem(item)}
+          </Button>
+        </List.Item>
+      )}
       pagination={{
         showQuickJumper: true,
         onChange: (page) => {
-          console.log(page);
+          // console.log(page);
         },
         pageSize: pageSize,
       }}

@@ -16,13 +16,13 @@ export enum Method {
 type EagerMeasure = {
   readonly picture?: (string | null)[] | null;
   readonly step: string;
-  readonly des: string;
+  readonly des?: string | null;
 }
 
 type LazyMeasure = {
   readonly picture?: (string | null)[] | null;
   readonly step: string;
-  readonly des: string;
+  readonly des?: string | null;
 }
 
 export declare type Measure = LazyLoading extends LazyLoadingDisabled ? EagerMeasure : LazyMeasure
