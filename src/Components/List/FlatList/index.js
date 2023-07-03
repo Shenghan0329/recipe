@@ -1,20 +1,30 @@
-import { List, Button } from "antd";
+import { List, Button, Spin } from "antd";
 import { useState, useEffect, useRef } from "react";
 import { DataStore } from "aws-amplify/lib-esm";
 import { Recipes } from "../../../models";
 import filter from "../../../Helpers/filter";
 const f = filter;
 
-const FlatList = ({ data = [], listItem, pageSize = 6, filters = {} }) => {
-  const [listData, setListData] = useState([]);
-
-  useEffect(() => {
-    DataStore.query(Recipes).then((results) => setListData(results));
-  }, []);
+const FlatList = ({ data, listItem, pageSize = 6, filters = {} }) => {
   // data should be in the form [{title:...},...]
   // Every listItem component should always have item as props
 
-  console.log(listData, data);
+  if (data.length === 0) {
+    return (
+      <div
+        style={{
+          margin: "20 0",
+          marginBottom: 20,
+          padding: "150px 50px",
+          textAlign: "center",
+          background: "rgba(0, 0, 0, 0.05)",
+          borderRadius: 4,
+        }}
+      >
+        <Spin />
+      </div>
+    );
+  }
   return (
     <List
       grid={{
@@ -26,12 +36,12 @@ const FlatList = ({ data = [], listItem, pageSize = 6, filters = {} }) => {
         xl: 3,
         xxl: 3,
       }}
-      dataSource={listData}
+      dataSource={data}
       renderItem={(item) => (
         <List.Item>
           <Button
             type="text"
-            href={"recipes/" + item.id}
+            href={"/recipes/" + item.id}
             style={{
               width: "100%",
               height: "auto",

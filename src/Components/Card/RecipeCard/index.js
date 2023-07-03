@@ -1,5 +1,6 @@
 import { Card } from "antd";
 import { useNavigate } from "react-router-dom";
+import "./style.css";
 const { Meta } = Card;
 
 const RecipeCard = (item) => {
@@ -13,7 +14,7 @@ const RecipeCard = (item) => {
       hoverable
       style={{
         width: "100%",
-        aspectRatio: 2 / 2,
+        aspectRatio: 4 / 3,
       }}
       cover={<img alt="delicious food" src={item.img} />}
       //   onClick={onClick}

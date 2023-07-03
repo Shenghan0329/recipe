@@ -6,8 +6,11 @@ const Image = ({ src, height = 200, width = 200, margins = [0, 0, 0, 0] }) => {
     marginBottom: margins[1],
     marginLeft: margins[2],
     marginRight: margins[3],
-    background: "url(" + src + ") no-repeat center center",
+    backgroundImage: "url(" + src + ")",
+    backgroundPosition: "center center",
     backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    width: width,
   };
   return (
     <>
