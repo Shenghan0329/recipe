@@ -9,22 +9,22 @@ const FlatList = ({ data, listItem, pageSize = 6, filters = {} }) => {
   // data should be in the form [{title:...},...]
   // Every listItem component should always have item as props
 
-  if (data.length === 0) {
-    return (
-      <div
-        style={{
-          margin: "20 0",
-          marginBottom: 20,
-          padding: "150px 50px",
-          textAlign: "center",
-          background: "rgba(0, 0, 0, 0.05)",
-          borderRadius: 4,
-        }}
-      >
-        <Spin />
-      </div>
-    );
-  }
+  // if (data.length === 0) {
+  //   return (
+  //     <div
+  //       style={{
+  //         margin: "20 0",
+  //         marginBottom: 20,
+  //         padding: "150px 50px",
+  //         textAlign: "center",
+  //         background: "rgba(0, 0, 0, 0.05)",
+  //         borderRadius: 4,
+  //       }}
+  //     >
+  //       <Spin />
+  //     </div>
+  //   );
+  // }
   return (
     <List
       grid={{

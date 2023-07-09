@@ -8,9 +8,9 @@ export default function TextList({
   header = "",
   listItem = defaultListItem,
 }) {
-  if (data.length === 0) {
-    return <Loading />;
-  }
+  // if (data.length === 0) {
+  //   return <Loading />;
+  // }
   return (
     <List
       header={

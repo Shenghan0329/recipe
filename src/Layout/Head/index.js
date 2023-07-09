@@ -10,7 +10,7 @@ const Head = () => {
   const navList = ["Home", "Listing", "Articles", "Add Recipe", "Contribute"];
   const linkList = [
     "/",
-    "/list",
+    "/recipes",
     "/article",
     "/add",
     "/contribute",

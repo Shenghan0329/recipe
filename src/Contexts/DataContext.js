@@ -1,7 +1,7 @@
 import { createContext, useEffect } from "react";
 import { useState } from "react";
 import { DataStore } from "aws-amplify";
-import { Recipes } from "../../models";
+import { Recipes } from "../models";
 import { useContext } from "react";
 
 const DataContext = createContext({});

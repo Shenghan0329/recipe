@@ -36,7 +36,7 @@ const Home = () => {
         <Breadcrumb.Item>App</Breadcrumb.Item>
       </Breadcrumb>
       <Title level={2}>Today's Favourites</Title>
-      <Gallery />
+      {data?.length === 0 ? null : <Gallery data={data} />}
       <Title level={2}>Beginners Friendly</Title>
       <RecipeList data={easyData} pageSize={6} />
       <Title level={2}>Enjoy Alone</Title>

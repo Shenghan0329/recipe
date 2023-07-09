@@ -1,6 +1,6 @@
 import { Carousel } from "antd";
+import { useEffect } from "react";
 import GalleryCard from "../Card/GalleryCard";
-import recipes from "../../data/recipes.json";
 
 const contentStyle = {
   height: "300px",
@@ -9,11 +9,20 @@ const contentStyle = {
   textAlign: "center",
   background: "#364d79",
 };
-const Gallery = ({ data = recipes, galleryItem = GalleryCard }) => (
-  <Carousel autoplay>
-    {data.map((item, index) => {
-      return <div style={contentStyle}>{galleryItem(item)};</div>;
-    })}
-  </Carousel>
-);
+const Gallery = ({ data, galleryItem = GalleryCard }) => {
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+  return (
+    <Carousel autoplay>
+      {data?.length > 8
+        ? data?.slice(0, 8).map((item, index) => {
+            return <div style={contentStyle}>{galleryItem(item)};</div>;
+          })
+        : data?.map((item, index) => {
+            return <div style={contentStyle}>{galleryItem(item)};</div>;
+          })}
+    </Carousel>
+  );
+};
 export default Gallery;

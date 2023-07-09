@@ -7,6 +7,7 @@ import Head from "./Layout/Head";
 import Home from "./Screens/Home";
 import Foot from "./Layout/Foot";
 import DataContextProvider from "./Contexts/DataContext";
+// import AuthContextProvider from "./Contexts/AuthContext";
 
 Amplify.configure(config);
 
@@ -15,6 +16,7 @@ const { Content } = Layout;
 const App = () => {
   return (
     <BrowserRouter>
+      {/* <AuthContextProvider> */}
       <DataContextProvider>
         <Layout className="layout">
           <Head />
@@ -29,6 +31,7 @@ const App = () => {
           <Foot />
         </Layout>
       </DataContextProvider>
+      {/* </AuthContextProvider> */}
     </BrowserRouter>
   );
 };
