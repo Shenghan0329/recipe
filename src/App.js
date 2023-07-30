@@ -7,31 +7,33 @@ import Head from "./Layout/Head";
 import Home from "./Screens/Home";
 import Foot from "./Layout/Foot";
 import DataContextProvider from "./Contexts/DataContext";
-// import AuthContextProvider from "./Contexts/AuthContext";
+import updateAll from "./data/updateImage";
+import AuthContextProvider from "./Contexts/AuthContext";
 
 Amplify.configure(config);
 
+// updateAll();
 const { Content } = Layout;
 
 const App = () => {
   return (
     <BrowserRouter>
-      {/* <AuthContextProvider> */}
-      <DataContextProvider>
-        <Layout className="layout">
-          <Head />
-          <Content
-            style={{
-              padding: "0 50px",
-              width: "70%",
-            }}
-          >
-            <Router />
-          </Content>
-          <Foot />
-        </Layout>
-      </DataContextProvider>
-      {/* </AuthContextProvider> */}
+      <AuthContextProvider>
+        <DataContextProvider>
+          <Layout className="layout">
+            <Head />
+            <Content
+              style={{
+                padding: "0 50px",
+                width: "70%",
+              }}
+            >
+              <Router />
+            </Content>
+            <Foot />
+          </Layout>
+        </DataContextProvider>
+      </AuthContextProvider>
     </BrowserRouter>
   );
 };

@@ -16,11 +16,13 @@ export declare type UserCreateFormInputValues = {
     name?: string;
     image?: string;
     introduce?: string;
+    sub?: string;
 };
 export declare type UserCreateFormValidationValues = {
     name?: ValidationFunction<string>;
     image?: ValidationFunction<string>;
     introduce?: ValidationFunction<string>;
+    sub?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type UserCreateFormOverridesProps = {
@@ -28,6 +30,7 @@ export declare type UserCreateFormOverridesProps = {
     name?: PrimitiveOverrideProps<TextFieldProps>;
     image?: PrimitiveOverrideProps<TextFieldProps>;
     introduce?: PrimitiveOverrideProps<TextFieldProps>;
+    sub?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type UserCreateFormProps = React.PropsWithChildren<{
     overrides?: UserCreateFormOverridesProps | undefined | null;

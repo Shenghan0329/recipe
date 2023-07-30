@@ -41,7 +41,7 @@ async function updateImages(items) {
     const data = JSON.stringify({ meauID: indexes[i], img: images[i] }) + ",\n";
 
     // writing the JSON string content to a file
-    fs.appendFile("data.json", data, (error) => {
+    fs.appendFile("images.json", data, (error) => {
       // throwing the error
       // in case of a writing problem
       if (error) {
@@ -67,7 +67,9 @@ const getImages = async (names) => {
       headless: true,
     },
   });
-  let n = names.map((ele) => ele.replace(/[!@#$%^&*()\?]/g, ""));
+  let n = names.map(
+    (ele) => ele.replace(/[!@#$%^&*()\?]/g, "") + " meishichina"
+  );
   console.log(n);
   const results = await google.scrape(n, 1);
   const images = results.map((ele) => ele?.images[0]?.url);

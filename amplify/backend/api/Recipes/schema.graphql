@@ -4,6 +4,7 @@ type User @model @auth(rules: [{allow: public}]) {
   image: String
   introduce: String
   Recipes: [Recipes] @hasMany(indexName: "byUser", fields: ["id"])
+  sub: String!
 }
 
 enum Method {

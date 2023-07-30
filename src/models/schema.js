@@ -47,6 +47,13 @@ export const schema = {
                         ]
                     }
                 },
+                "sub": {
+                    "name": "sub",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -353,5 +360,5 @@ export const schema = {
         }
     },
     "codegenVersion": "3.4.4",
-    "version": "ee9423daa883e3a8dbd43984fc05175c"
+    "version": "5176b463f72d1046adced14b8a67a10c"
 };

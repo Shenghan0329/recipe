@@ -55,6 +55,7 @@ type EagerUser = {
   readonly image?: string | null;
   readonly introduce?: string | null;
   readonly Recipes?: (Recipes | null)[] | null;
+  readonly sub: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -69,6 +70,7 @@ type LazyUser = {
   readonly image?: string | null;
   readonly introduce?: string | null;
   readonly Recipes: AsyncCollection<Recipes>;
+  readonly sub: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

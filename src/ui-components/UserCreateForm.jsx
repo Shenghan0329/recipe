@@ -26,21 +26,25 @@ export default function UserCreateForm(props) {
     name: "",
     image: "",
     introduce: "",
+    sub: "",
   };
   const [name, setName] = React.useState(initialValues.name);
   const [image, setImage] = React.useState(initialValues.image);
   const [introduce, setIntroduce] = React.useState(initialValues.introduce);
+  const [sub, setSub] = React.useState(initialValues.sub);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setName(initialValues.name);
     setImage(initialValues.image);
     setIntroduce(initialValues.introduce);
+    setSub(initialValues.sub);
     setErrors({});
   };
   const validations = {
     name: [{ type: "Required" }],
     image: [],
     introduce: [],
+    sub: [{ type: "Required" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -71,6 +75,7 @@ export default function UserCreateForm(props) {
           name,
           image,
           introduce,
+          sub,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -128,6 +133,7 @@ export default function UserCreateForm(props) {
               name: value,
               image,
               introduce,
+              sub,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -154,6 +160,7 @@ export default function UserCreateForm(props) {
               name,
               image: value,
               introduce,
+              sub,
             };
             const result = onChange(modelFields);
             value = result?.image ?? value;
@@ -180,6 +187,7 @@ export default function UserCreateForm(props) {
               name,
               image,
               introduce: value,
+              sub,
             };
             const result = onChange(modelFields);
             value = result?.introduce ?? value;
@@ -193,6 +201,33 @@ export default function UserCreateForm(props) {
         errorMessage={errors.introduce?.errorMessage}
         hasError={errors.introduce?.hasError}
         {...getOverrideProps(overrides, "introduce")}
+      ></TextField>
+      <TextField
+        label="Sub"
+        isRequired={true}
+        isReadOnly={false}
+        value={sub}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              image,
+              introduce,
+              sub: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.sub ?? value;
+          }
+          if (errors.sub?.hasError) {
+            runValidationTasks("sub", value);
+          }
+          setSub(value);
+        }}
+        onBlur={() => runValidationTasks("sub", sub)}
+        errorMessage={errors.sub?.errorMessage}
+        hasError={errors.sub?.hasError}
+        {...getOverrideProps(overrides, "sub")}
       ></TextField>
       <Flex
         justifyContent="space-between"

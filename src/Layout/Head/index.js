@@ -38,13 +38,7 @@ const Head = () => {
       }}
     >
       <div className="demo-logo" />
-      <Menu
-        theme="dark"
-        mode="horizontal"
-        defaultSelectedKeys={["1"]}
-        items={navItems}
-        onClick={onClick}
-      />
+      <Menu theme="dark" mode="horizontal" items={navItems} onClick={onClick} />
     </Header>
   );
 };
