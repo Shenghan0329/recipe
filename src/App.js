@@ -18,22 +18,22 @@ const { Content } = Layout;
 const App = () => {
   return (
     <BrowserRouter>
-      <AuthContextProvider>
-        <DataContextProvider>
-          <Layout className="layout">
-            <Head />
-            <Content
-              style={{
-                padding: "0 50px",
-                width: "70%",
-              }}
-            >
-              <Router />
-            </Content>
-            <Foot />
-          </Layout>
-        </DataContextProvider>
-      </AuthContextProvider>
+      {/* <AuthContextProvider> */}
+      <DataContextProvider>
+        <Layout className="layout">
+          <Head />
+          <Content
+            style={{
+              padding: "0 50px",
+              width: "70%",
+            }}
+          >
+            <Router />
+          </Content>
+          <Foot />
+        </Layout>
+      </DataContextProvider>
+      {/* </AuthContextProvider> */}
     </BrowserRouter>
   );
 };

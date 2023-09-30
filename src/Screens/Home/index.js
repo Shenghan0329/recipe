@@ -26,17 +26,8 @@ const Home = () => {
 
   return (
     <>
-      <Breadcrumb
-        style={{
-          margin: "16px 0",
-        }}
-      >
-        <Breadcrumb.Item>Home</Breadcrumb.Item>
-        <Breadcrumb.Item>List</Breadcrumb.Item>
-        <Breadcrumb.Item>App</Breadcrumb.Item>
-      </Breadcrumb>
       <Title level={2}>Today's Favourites</Title>
-      {data?.length === 0 ? null : <Gallery data={data} />}
+      <Gallery data={data} />
       <Title level={2}>Beginners Friendly</Title>
       <RecipeList data={easyData} pageSize={6} />
       <Title level={2}>Enjoy Alone</Title>

@@ -12,13 +12,15 @@ export default function TextList({
   //   return <Loading />;
   // }
   return (
-    <List
-      header={
-        <Text style={{ fontSize: "1.2em", fontWeight: "600" }}>{header}</Text>
-      }
-      bordered
-      dataSource={data}
-      renderItem={(item) => <List.Item>{listItem(item)}</List.Item>}
-    />
+    <Loading width="100%" height="300px" data={data}>
+      <List
+        header={
+          <Text style={{ fontSize: "1.2em", fontWeight: "600" }}>{header}</Text>
+        }
+        bordered
+        dataSource={data}
+        renderItem={(item) => <List.Item>{listItem(item)}</List.Item>}
+      />
+    </Loading>
   );
 }

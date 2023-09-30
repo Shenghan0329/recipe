@@ -1,4 +1,11 @@
-const Image = ({ src, height = 200, width = 200, margins = [0, 0, 0, 0] }) => {
+import Loading from "../Loading";
+
+const Image = ({
+  src = "",
+  height = 200,
+  width = 200,
+  margins = [0, 0, 0, 0],
+}) => {
   const customStyle = {
     height: height,
     width: width,
@@ -13,9 +20,9 @@ const Image = ({ src, height = 200, width = 200, margins = [0, 0, 0, 0] }) => {
     width: width,
   };
   return (
-    <>
+    <Loading width={width} height={height} data={src}>
       <div style={customStyle}></div>
-    </>
+    </Loading>
   );
 };
 

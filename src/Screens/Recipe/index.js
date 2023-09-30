@@ -1,13 +1,15 @@
 import { useParams, useRoutes } from "react-router-dom";
 import { Typography, Row, Col } from "antd";
+import { useState, useEffect } from "react";
+import { DataStore } from "aws-amplify/lib-esm";
+import { Recipes, User } from "../../models";
+import { useDataContext } from "../../Contexts/DataContext";
 import Image from "../../Components/Image";
 import TextList from "../../Components/List/TextList";
 import IngredientListCard from "../../Components/Card/IngredientListCard";
 import StepCard from "../../Components/Card/StepCard";
+import Loading from "../../Components/Loading";
 import recipes from "../../data/recipes.json";
-import { useState, useEffect } from "react";
-import { DataStore } from "aws-amplify/lib-esm";
-import { Recipes, User } from "../../models";
 
 const { Title, Text } = Typography;
 
@@ -29,14 +31,17 @@ const Recipe = () => {
   const [user, setUser] = useState({});
   const [scrapyTime, setScrapyTime] = useState("");
   const [func, setFunc] = useState("");
+  const { data, setData } = useDataContext();
 
   useEffect(() => {
-    console.log(id);
     DataStore.query(Recipes, id).then((result) => {
       console.log(result);
       setRecipe(result);
     });
   }, []);
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
   useEffect(() => {
     const tags = recipe?.tags;
     console.log(tags);
