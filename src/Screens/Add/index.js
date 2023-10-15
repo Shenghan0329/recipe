@@ -1,8 +1,34 @@
-import { Button, Form, Input, Select, Upload } from "antd";
+//  readonly id: string;
+// readonly meauID: number;
+//   readonly name: string;
+// readonly tags?: (string | null)[] | null;
+// readonly img: string;
+//     readonly url: string;
+//   readonly level?: string | null;
+//   readonly peopleNum?: number | null;
+//   readonly taste?: string | null;
+//   readonly cookTime?: string | null;
+// readonly mainIngredient?: Ingredient[] | null;
+// readonly accessories?: (Ingredient | null)[] | null;
+// readonly measure?: Measure[] | null;
+//   readonly techniques?: string | null;
+//     readonly scrapyTime?: string | null;
+//   readonly method?: Method | keyof typeof Method | null;
+// readonly userID: string;
+//   readonly prepareTime?: string | null;
+
+import { Button, Form, Upload } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
+import { useEffect } from "react";
 import React from "react";
-const { Option } = Select;
-const { TextArea } = Input;
+import InputText from "../../Components/Form/Components/Input/Text";
+import Options from "../../Components/Form/Components/Input/Options";
+import DataContextProvider, {
+  useDataContext,
+} from "../../Contexts/DataContext";
+import { User, Recipes, Method, Measure, Ingredient } from "../../models";
+import InputValue from "../../Components/Form/Components/Input/InputValue";
+
 const normFile = (e) => {
   if (Array.isArray(e)) {
     return e;
@@ -25,6 +51,7 @@ const tailLayout = {
 };
 
 const Add = () => {
+  const { dataSize, setDataSize } = useDataContext();
   const formRef = React.useRef(null);
   const onFinish = (values) => {
     console.log(values);
@@ -64,6 +91,9 @@ const Add = () => {
     //     break;
     // }
   };
+  useEffect(() => {
+    console.log(dataSize);
+  }, [dataSize]);
   return (
     <Form
       {...layout}
@@ -76,49 +106,29 @@ const Add = () => {
         paddingBottom: "30px",
       }}
     >
-      <Form.Item
-        name="name"
-        label="Name"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        name="description"
-        label="Description"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
-      >
-        <TextArea rows={4} />
-      </Form.Item>
-
-      <Form.Item
-        name="difficulty"
+      <InputText label="Name" name="name" />
+      <Options
+        label="Method"
+        name="method"
+        options={Object.keys(Method).map((key) => {
+          return { value: key, content: Method[key] };
+        })}
+      />
+      <InputText label="Level" name="level" rows={1} />
+      <InputValue label="Servings" name="peopleNum" />
+      <InputText label="Taste" name="taste" rows={1} />
+      <InputText label="Cook Time" name="cookTime" rows={1} />
+      <InputText label="Techniques" name="techniques" rows={4} />
+      <Options
         label="Difficulty"
-        rules={[
-          {
-            required: true,
-          },
+        name="difficulty"
+        options={[
+          { value: "0", content: 0 },
+          { value: "1", content: 1 },
+          { value: "2", content: 2 },
+          { value: "3", content: 3 },
         ]}
-      >
-        <Select
-          placeholder="Select a option and change input text above"
-          onChange={onDiffChange}
-          allowClear
-        >
-          <Option value="0">0</Option>
-          <Option value="1">1</Option>
-          <Option value="2">2</Option>
-          <Option value="3">3</Option>
-        </Select>
-      </Form.Item>
+      />
 
       <Form.Item
         label="Image"

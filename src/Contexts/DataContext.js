@@ -7,6 +7,7 @@ import { useContext } from "react";
 const DataContext = createContext({});
 const DataContextProvider = ({ children }) => {
   const [data, setData] = useState([]);
+  const [dataSize, setDataSize] = useState(-1);
   const [easyData, setEasyData] = useState([]);
   const [singleData, setSingleData] = useState([]);
   const [bakeData, setBakeData] = useState([]);
@@ -18,6 +19,7 @@ const DataContextProvider = ({ children }) => {
         setData(totalData);
         setCustomData(totalData);
         setFilterData(totalData);
+        setDataSize(totalData.length);
       });
     }
     if (easyData.length === 0) {
@@ -58,6 +60,8 @@ const DataContextProvider = ({ children }) => {
         setSingleData,
         bakeData,
         setBakeData,
+        dataSize,
+        setDataSize,
       }}
     >
       {children}
