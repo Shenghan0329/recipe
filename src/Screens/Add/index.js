@@ -1,8 +1,8 @@
-//  readonly id: string;
+//   readonly id: string;
 // readonly meauID: number;
 //   readonly name: string;
-// readonly tags?: (string | null)[] | null;
-// readonly img: string;
+//   readonly tags?: (string | null)[] | null;
+//   readonly img: string;
 //     readonly url: string;
 //   readonly level?: string | null;
 //   readonly peopleNum?: number | null;
@@ -19,22 +19,18 @@
 
 import { Button, Form, Upload } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 import InputText from "../../Components/Form/Components/Input/Text";
 import Options from "../../Components/Form/Components/Input/Options";
+import InputValue from "../../Components/Form/Components/Input/InputValue";
+import DynamicInput from "../../Components/Form/Components/Input/DynamicInput";
+import UploadImage from "../../Components/Form/Components/UploadImage";
 import DataContextProvider, {
   useDataContext,
 } from "../../Contexts/DataContext";
 import { User, Recipes, Method, Measure, Ingredient } from "../../models";
-import InputValue from "../../Components/Form/Components/Input/InputValue";
 
-const normFile = (e) => {
-  if (Array.isArray(e)) {
-    return e;
-  }
-  return e?.fileList;
-};
 const layout = {
   labelCol: {
     span: 8,
@@ -53,6 +49,8 @@ const tailLayout = {
 const Add = () => {
   const { dataSize, setDataSize } = useDataContext();
   const formRef = React.useRef(null);
+
+  const [imgList, setImgList] = useState(null);
   const onFinish = (values) => {
     console.log(values);
   };
@@ -65,6 +63,7 @@ const Add = () => {
       difficulty: "0",
     });
   };
+
   const onDiffChange = (value) => {
     // switch (value) {
     //   case "0":
@@ -94,6 +93,9 @@ const Add = () => {
   useEffect(() => {
     console.log(dataSize);
   }, [dataSize]);
+  useEffect(() => {
+    console.log(imgList);
+  }, [imgList]);
   return (
     <Form
       {...layout}
@@ -107,6 +109,12 @@ const Add = () => {
       }}
     >
       <InputText label="Name" name="name" />
+      <UploadImage
+        label="Dish Image"
+        name="dishImage"
+        fileList={imgList}
+        setFileList={setImgList}
+      />
       <Options
         label="Method"
         name="method"
@@ -118,6 +126,11 @@ const Add = () => {
       <InputValue label="Servings" name="peopleNum" />
       <InputText label="Taste" name="taste" rows={1} />
       <InputText label="Cook Time" name="cookTime" rows={1} />
+      <DynamicInput
+        label="Tags"
+        name="tags"
+        items={[<InputText label="" name="tag" rows={1} />]}
+      />
       <InputText label="Techniques" name="techniques" rows={4} />
       <Options
         label="Difficulty"
@@ -130,7 +143,7 @@ const Add = () => {
         ]}
       />
 
-      <Form.Item
+      {/* <Form.Item
         label="Image"
         valuePropName="fileList"
         getValueFromEvent={normFile}
@@ -141,7 +154,7 @@ const Add = () => {
             <div style={{ marginTop: 8 }}>Upload</div>
           </div>
         </Upload>
-      </Form.Item>
+      </Form.Item> */}
 
       <Form.Item {...tailLayout}>
         <Button type="primary" htmlType="submit">

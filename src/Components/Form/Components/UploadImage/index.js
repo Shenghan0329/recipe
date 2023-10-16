@@ -1,62 +1,70 @@
 import React, { useState } from "react";
-import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
-import { message, Upload } from "antd";
-const getBase64 = (img, callback) => {
-  const reader = new FileReader();
-  reader.addEventListener("load", () => callback(reader.result));
-  reader.readAsDataURL(img);
-};
-const beforeUpload = (file) => {
-  const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
-  if (!isJpgOrPng) {
-    message.error("You can only upload JPG/PNG file!");
-  }
-  const isLt2M = file.size / 1024 / 1024 < 2;
-  if (!isLt2M) {
-    message.error("Image must smaller than 2MB!");
-  }
-  return isJpgOrPng && isLt2M;
-};
-const UploadImage = () => {
-  const [loading, setLoading] = useState(false);
-  const [imageUrl, setImageUrl] = useState();
+import { PlusOutlined } from "@ant-design/icons";
+import { message, Upload, Form } from "antd";
+
+const UploadImage = ({
+  label,
+  name = label,
+  fileList,
+  setFileList,
+  multi = false,
+  required = true,
+}) => {
+  const [imageUrl, setImageUrl] = useState("");
+  const beforeUpload = (file) =>
+    new Promise((resolve, reject) => {
+      const isJpgOrPng =
+        file.type === "image/jpeg" || file.type === "image/png";
+      if (!isJpgOrPng) {
+        message.error("You can only upload JPG/PNG file!");
+        reject(file);
+        return;
+      }
+      const isLt2M = file.size / 1024 / 1024 < 2;
+      if (!isLt2M) {
+        message.error("Image must smaller than 2MB!");
+        reject(file);
+        return;
+      }
+      !multi ? setFileList([file]) : setFileList((files) => [...files, file]);
+      resolve(file);
+    });
+  const getBase64 = (img, callback) => {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => callback(reader.result));
+    reader.readAsDataURL(img);
+  };
   const handleChange = (info) => {
-    if (info.file.status === "uploading") {
-      setLoading(true);
-      return;
-    }
-    if (info.file.status === "done") {
+    if (info.file.status == "uploading") {
       // Get this url from response in real world.
       getBase64(info.file.originFileObj, (url) => {
-        setLoading(false);
         setImageUrl(url);
       });
+    } else {
+      setImageUrl("");
     }
   };
-  const uploadButton = (
-    <div>
-      {loading ? <LoadingOutlined /> : <PlusOutlined />}
-      <div
-        style={{
-          marginTop: 8,
-        }}
-      >
-        Upload
-      </div>
-    </div>
-  );
   return (
-    <>
+    <Form.Item
+      name={name}
+      label={label}
+      rules={[
+        {
+          required: { required },
+        },
+      ]}
+    >
       <Upload
         name="avatar"
         listType="picture-card"
         className="avatar-uploader"
-        showUploadList={true}
-        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+        showUploadList={!multi ? false : true}
+        fileList={fileList}
         beforeUpload={beforeUpload}
         onChange={handleChange}
+        customRequest={() => {}}
       >
-        {imageUrl ? (
+        {imageUrl && !multi ? (
           <img
             src={imageUrl}
             alt="avatar"
@@ -65,10 +73,11 @@ const UploadImage = () => {
             }}
           />
         ) : (
-          uploadButton
+          <PlusOutlined />
         )}
       </Upload>
-    </>
+    </Form.Item>
   );
 };
+
 export default UploadImage;
