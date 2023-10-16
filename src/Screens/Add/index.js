@@ -1,5 +1,5 @@
 //   readonly id: string;
-// readonly meauID: number;
+//     readonly meauID: number;
 //   readonly name: string;
 //   readonly tags?: (string | null)[] | null;
 //   readonly img: string;
@@ -8,9 +8,9 @@
 //   readonly peopleNum?: number | null;
 //   readonly taste?: string | null;
 //   readonly cookTime?: string | null;
-// readonly mainIngredient?: Ingredient[] | null;
-// readonly accessories?: (Ingredient | null)[] | null;
-// readonly measure?: Measure[] | null;
+//   readonly mainIngredient?: Ingredient[] | null;
+//   readonly accessories?: (Ingredient | null)[] | null;
+//   readonly measure?: Measure[] | null;
 //   readonly techniques?: string | null;
 //     readonly scrapyTime?: string | null;
 //   readonly method?: Method | keyof typeof Method | null;
@@ -51,6 +51,9 @@ const Add = () => {
   const formRef = React.useRef(null);
 
   const [imgList, setImgList] = useState(null);
+  const [currMethodImg, setCurrMethodImg] = useState(null);
+  const [methodImgList, setMethodImgList] = useState([]); // 2D array
+
   const onFinish = (values) => {
     console.log(values);
   };
@@ -109,12 +112,17 @@ const Add = () => {
       }}
     >
       <InputText label="Name" name="name" />
-      <UploadImage
+      <Form.Item
         label="Dish Image"
         name="dishImage"
-        fileList={imgList}
-        setFileList={setImgList}
-      />
+        rules={[
+          {
+            required: true,
+          },
+        ]}
+      >
+        <UploadImage fileList={imgList} setFileList={setImgList} />
+      </Form.Item>
       <Options
         label="Method"
         name="method"
@@ -129,33 +137,72 @@ const Add = () => {
       <DynamicInput
         label="Tags"
         name="tags"
-        items={[<InputText label="" name="tag" rows={1} />]}
-      />
-      <InputText label="Techniques" name="techniques" rows={4} />
-      <Options
-        label="Difficulty"
-        name="difficulty"
-        options={[
-          { value: "0", content: 0 },
-          { value: "1", content: 1 },
-          { value: "2", content: 2 },
-          { value: "3", content: 3 },
+        items={[
+          {
+            function: <InputText rows={1} wrapped={false} />,
+            label: "",
+            name: "tagName",
+          },
         ]}
       />
-
-      {/* <Form.Item
-        label="Image"
-        valuePropName="fileList"
-        getValueFromEvent={normFile}
-      >
-        <Upload action="/upload.do" listType="picture-card">
-          <div>
-            <PlusOutlined />
-            <div style={{ marginTop: 8 }}>Upload</div>
-          </div>
-        </Upload>
-      </Form.Item> */}
-
+      <DynamicInput
+        label="Ingredients"
+        name="ingredients"
+        items={[
+          {
+            function: <InputText rows={1} wrapped={false} />,
+            label: "Name",
+            name: "ingreName",
+          },
+          {
+            function: <InputText rows={1} required={false} wrapped={false} />,
+            label: "Weight",
+            name: "ingreWeight",
+          },
+        ]}
+      />
+      <DynamicInput
+        label="Accessories"
+        name="accessories"
+        items={[
+          {
+            function: <InputText rows={1} wrapped={false} />,
+            label: "Name",
+            name: "accName",
+          },
+          {
+            function: <InputText rows={1} required={false} wrapped={false} />,
+            label: "Weight",
+            name: "accWeight",
+          },
+        ]}
+      />
+      <DynamicInput
+        label="Measures"
+        name="measures"
+        items={[
+          {
+            function: <InputText wrapped={false} rows={1} />,
+            label: "Description",
+            name: "description",
+          },
+          {
+            function: (
+              <UploadImage
+                required={false}
+                fileList={currMethodImg}
+                setFileList={(img) => {
+                  setCurrMethodImg(img);
+                  setMethodImgList((props) => [...props, img]);
+                }}
+              />
+            ),
+            label: "Image",
+            name: "methodImage",
+          },
+        ]}
+      />
+      <InputText label="Techniques" name="techniques" rows={4} />
       <Form.Item {...tailLayout}>
         <Button type="primary" htmlType="submit">
           Submit

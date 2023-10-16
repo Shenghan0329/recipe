@@ -3,8 +3,6 @@ import { PlusOutlined } from "@ant-design/icons";
 import { message, Upload, Form } from "antd";
 
 const UploadImage = ({
-  label,
-  name = label,
   fileList,
   setFileList,
   multi = false,
@@ -45,38 +43,28 @@ const UploadImage = ({
     }
   };
   return (
-    <Form.Item
-      name={name}
-      label={label}
-      rules={[
-        {
-          required: { required },
-        },
-      ]}
+    <Upload
+      name="avatar"
+      listType="picture-card"
+      className="avatar-uploader"
+      showUploadList={!multi ? false : true}
+      fileList={fileList}
+      beforeUpload={beforeUpload}
+      onChange={handleChange}
+      customRequest={() => {}}
     >
-      <Upload
-        name="avatar"
-        listType="picture-card"
-        className="avatar-uploader"
-        showUploadList={!multi ? false : true}
-        fileList={fileList}
-        beforeUpload={beforeUpload}
-        onChange={handleChange}
-        customRequest={() => {}}
-      >
-        {imageUrl && !multi ? (
-          <img
-            src={imageUrl}
-            alt="avatar"
-            style={{
-              width: "100%",
-            }}
-          />
-        ) : (
-          <PlusOutlined />
-        )}
-      </Upload>
-    </Form.Item>
+      {imageUrl && !multi ? (
+        <img
+          src={imageUrl}
+          alt="avatar"
+          style={{
+            width: "100%",
+          }}
+        />
+      ) : (
+        <PlusOutlined />
+      )}
+    </Upload>
   );
 };
 

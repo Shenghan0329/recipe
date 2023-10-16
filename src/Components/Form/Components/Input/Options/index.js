@@ -2,9 +2,10 @@ import { Button, Form, Input, Select, Upload } from "antd";
 const { Option } = Select;
 
 const Options = ({
-  label,
+  label = "",
   name = label,
   required = true,
+  wrapped = true,
   options = [{ value: "1", content: "Default Content" }],
 }) => {
   const onDiffChange = (value) => {
@@ -33,13 +34,13 @@ const Options = ({
     //     break;
     // }
   };
-  return (
+  return wrapped ? (
     <Form.Item
       name={name}
       label={label}
       rules={[
         {
-          required: true,
+          required: { required },
         },
       ]}
     >
@@ -53,6 +54,16 @@ const Options = ({
         ))}
       </Select>
     </Form.Item>
+  ) : (
+    <Select
+      placeholder="Select a option and change input text above"
+      onChange={onDiffChange}
+      allowClear
+    >
+      {options.map((obj) => (
+        <Option value={obj.value}>{obj.content}</Option>
+      ))}
+    </Select>
   );
 };
 

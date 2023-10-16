@@ -1,7 +1,7 @@
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Space } from "antd";
 
-// Sample item: {function}
+// Sample item: {name, label, function}
 const DynamicInput = ({ label = "List", name = "users", items = [] }) => {
   return (
     <Form.Item label={label} style={{ marginBottom: 0 }}>
@@ -20,12 +20,11 @@ const DynamicInput = ({ label = "List", name = "users", items = [] }) => {
                 {items.map((item) => {
                   return (
                     <Form.Item
-                      style={{
-                        marginBottom: 0,
-                      }}
+                      name={item.name}
+                      label={item.label}
                       {...restField}
                     >
-                      {item}
+                      {item.function}
                     </Form.Item>
                   );
                 })}
