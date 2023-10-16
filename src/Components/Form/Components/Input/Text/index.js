@@ -4,9 +4,11 @@ const { TextArea } = Input;
 const InputText = ({
   label = "",
   name = label,
+  placeholder = "",
   required = true,
   rows = 1,
   wrapped = true,
+  style = {},
 }) => {
   return wrapped ? (
     <Form.Item
@@ -17,13 +19,18 @@ const InputText = ({
           required: { required },
         },
       ]}
+      style={style}
     >
-      {rows === 1 ? <Input /> : <TextArea rows={rows} />}
+      {rows === 1 ? (
+        <Input placeholder={placeholder} />
+      ) : (
+        <TextArea rows={rows} placeholder={placeholder} />
+      )}
     </Form.Item>
   ) : rows === 1 ? (
-    <Input />
+    <Input placeholder={placeholder} />
   ) : (
-    <TextArea rows={rows} />
+    <TextArea rows={rows} placeholder={placeholder} />
   );
 };
 

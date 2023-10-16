@@ -2,26 +2,33 @@ import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Space } from "antd";
 
 // Sample item: {name, label, function}
-const DynamicInput = ({ label = "List", name = "users", items = [] }) => {
+const DynamicInput = ({
+  label = "List",
+  name = "users",
+  placeholder = "Add field",
+  items = [],
+}) => {
   return (
     <Form.Item label={label} style={{ marginBottom: 0 }}>
       <Form.List name={name}>
         {(fields, { add, remove }) => (
           <>
             {fields.map(({ key, name, ...restField }) => (
-              <Space
+              <div
                 key={key}
                 style={{
                   display: "flex",
                   marginBottom: 0,
+                  verticalAlign: "sup",
+                  gap: "10px",
                 }}
-                align="baseline"
               >
                 {items.map((item) => {
                   return (
                     <Form.Item
-                      name={item.name}
-                      label={item.label}
+                      name={item.name || ""}
+                      label={item.label || ""}
+                      style={item.style || {}}
                       {...restField}
                     >
                       {item.function}
@@ -29,7 +36,7 @@ const DynamicInput = ({ label = "List", name = "users", items = [] }) => {
                   );
                 })}
                 <MinusCircleOutlined onClick={() => remove(name)} />
-              </Space>
+              </div>
             ))}
             <Form.Item>
               <Button
@@ -38,7 +45,7 @@ const DynamicInput = ({ label = "List", name = "users", items = [] }) => {
                 block
                 icon={<PlusOutlined />}
               >
-                Add field
+                {placeholder}
               </Button>
             </Form.Item>
           </>

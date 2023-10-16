@@ -4,6 +4,7 @@ const { Option } = Select;
 const Options = ({
   label = "",
   name = label,
+  placeholder = "",
   required = true,
   wrapped = true,
   options = [{ value: "1", content: "Default Content" }],
@@ -44,22 +45,14 @@ const Options = ({
         },
       ]}
     >
-      <Select
-        placeholder="Select a option and change input text above"
-        onChange={onDiffChange}
-        allowClear
-      >
+      <Select placeholder={placeholder} onChange={onDiffChange} allowClear>
         {options.map((obj) => (
           <Option value={obj.value}>{obj.content}</Option>
         ))}
       </Select>
     </Form.Item>
   ) : (
-    <Select
-      placeholder="Select a option and change input text above"
-      onChange={onDiffChange}
-      allowClear
-    >
+    <Select placeholder={placeholder} onChange={onDiffChange} allowClear>
       {options.map((obj) => (
         <Option value={obj.value}>{obj.content}</Option>
       ))}

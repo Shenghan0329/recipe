@@ -17,7 +17,7 @@
 // readonly userID: string;
 //   readonly prepareTime?: string | null;
 
-import { Button, Form, Upload } from "antd";
+import { Button, Form, Space } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import React from "react";
@@ -33,7 +33,7 @@ import { User, Recipes, Method, Measure, Ingredient } from "../../models";
 
 const layout = {
   labelCol: {
-    span: 8,
+    span: 4,
   },
   wrapperCol: {
     span: 16,
@@ -41,7 +41,7 @@ const layout = {
 };
 const tailLayout = {
   wrapperCol: {
-    offset: 8,
+    offset: 4,
     span: 16,
   },
 };
@@ -106,12 +106,16 @@ const Add = () => {
       name="control-ref"
       onFinish={onFinish}
       style={{
-        maxWidth: 600,
+        maxWidth: "100%",
         paddingTop: "50px",
         paddingBottom: "30px",
       }}
     >
-      <InputText label="Name" name="name" />
+      <InputText
+        label="Name"
+        name="name"
+        placeholder="Please enter the Dish Name"
+      />
       <Form.Item
         label="Dish Image"
         name="dishImage"
@@ -126,17 +130,24 @@ const Add = () => {
       <Options
         label="Method"
         name="method"
+        placeholder="Please enter the main technique for this dish"
         options={Object.keys(Method).map((key) => {
           return { value: key, content: Method[key] };
         })}
       />
-      <InputText label="Level" name="level" rows={1} />
+      <InputText
+        label="Level"
+        name="level"
+        rows={1}
+        placeholder="Please enter the difficulty level"
+      />
+      <InputText label="Cook Time" name="cookTime" rows={1} />
       <InputValue label="Servings" name="peopleNum" />
       <InputText label="Taste" name="taste" rows={1} />
-      <InputText label="Cook Time" name="cookTime" rows={1} />
       <DynamicInput
         label="Tags"
         name="tags"
+        placeholder="Add a new Tag"
         items={[
           {
             function: <InputText rows={1} wrapped={false} />,
@@ -148,15 +159,21 @@ const Add = () => {
       <DynamicInput
         label="Ingredients"
         name="ingredients"
+        placeholder="Add an Ingredient"
         items={[
           {
-            function: <InputText rows={1} wrapped={false} />,
-            label: "Name",
+            function: <InputText rows={1} wrapped={false} placeholder="Name" />,
             name: "ingreName",
           },
           {
-            function: <InputText rows={1} required={false} wrapped={false} />,
-            label: "Weight",
+            function: (
+              <InputText
+                rows={1}
+                required={false}
+                wrapped={false}
+                placeholder="Weight"
+              />
+            ),
             name: "ingreWeight",
           },
         ]}
@@ -164,27 +181,43 @@ const Add = () => {
       <DynamicInput
         label="Accessories"
         name="accessories"
+        placeholder="Add an Accessory"
         items={[
           {
-            function: <InputText rows={1} wrapped={false} />,
-            label: "Name",
+            function: <InputText rows={1} wrapped={false} placeholder="Name" />,
             name: "accName",
           },
           {
-            function: <InputText rows={1} required={false} wrapped={false} />,
-            label: "Weight",
+            function: (
+              <InputText
+                rows={1}
+                required={false}
+                wrapped={false}
+                placeholder="Weight"
+              />
+            ),
             name: "accWeight",
           },
         ]}
       />
       <DynamicInput
-        label="Measures"
+        label="Steps"
         name="measures"
+        placeholder="Add a step"
         items={[
           {
-            function: <InputText wrapped={false} rows={1} />,
-            label: "Description",
+            function: (
+              <div>
+                <InputText
+                  wrapped={false}
+                  rows={5}
+                  placeholder="Description for the step"
+                />
+              </div>
+            ),
+            placeholder: "Description for the step",
             name: "description",
+            style: { flexGrow: 1 },
           },
           {
             function: (
@@ -197,7 +230,6 @@ const Add = () => {
                 }}
               />
             ),
-            label: "Image",
             name: "methodImage",
           },
         ]}
