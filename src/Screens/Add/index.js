@@ -17,8 +17,8 @@
 // readonly userID: string;
 //   readonly prepareTime?: string | null;
 
-import { Button, Form, Space } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import { Button, Form, Space, Upload } from "antd";
+import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import React from "react";
 import InputText from "../../Components/Form/Components/Input/Text";
@@ -54,7 +54,17 @@ const Add = () => {
   const [currMethodImg, setCurrMethodImg] = useState(null);
   const [methodImgList, setMethodImgList] = useState([]); // 2D array
 
+  // const handleOnChange = ({ fileList }) => {
+  //   console.log(fileList);
+  //   return fileList.map((file) => ({
+  //     status: file.status,
+  //     uid: file.uid,
+  //     url: file.response ? file.response.data.url : file.url,
+  //   }));
+  // };
   const onFinish = (values) => {
+    let file = values.file;
+    console.log(file);
     console.log(values);
   };
   const onReset = () => {
@@ -99,6 +109,7 @@ const Add = () => {
   useEffect(() => {
     console.log(imgList);
   }, [imgList]);
+
   return (
     <Form
       {...layout}
@@ -116,17 +127,12 @@ const Add = () => {
         name="name"
         placeholder="Please enter the Dish Name"
       />
-      <Form.Item
+      <UploadImage
+        fileList={imgList}
+        setFileList={setImgList}
         label="Dish Image"
-        name="dishImage"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
-      >
-        <UploadImage fileList={imgList} setFileList={setImgList} />
-      </Form.Item>
+        name="img"
+      />
       <Options
         label="Method"
         name="method"
@@ -150,7 +156,7 @@ const Add = () => {
         placeholder="Add a new Tag"
         items={[
           {
-            function: <InputText rows={1} wrapped={false} />,
+            function: <InputText rows={2} wrapped={false} />,
             label: "",
             name: "tagName",
           },
@@ -158,12 +164,12 @@ const Add = () => {
       />
       <DynamicInput
         label="Ingredients"
-        name="ingredients"
+        name="mainIngredient"
         placeholder="Add an Ingredient"
         items={[
           {
             function: <InputText rows={1} wrapped={false} placeholder="Name" />,
-            name: "ingreName",
+            name: "name",
           },
           {
             function: (
@@ -174,7 +180,7 @@ const Add = () => {
                 placeholder="Weight"
               />
             ),
-            name: "ingreWeight",
+            name: "weight",
           },
         ]}
       />
@@ -185,18 +191,13 @@ const Add = () => {
         items={[
           {
             function: <InputText rows={1} wrapped={false} placeholder="Name" />,
-            name: "accName",
+            name: "name",
           },
           {
             function: (
-              <InputText
-                rows={1}
-                required={false}
-                wrapped={false}
-                placeholder="Weight"
-              />
+              <InputText wrapped={false} rows={1} placeholder="Weight" />
             ),
-            name: "accWeight",
+            name: "weight",
           },
         ]}
       />
@@ -207,30 +208,39 @@ const Add = () => {
         items={[
           {
             function: (
-              <div>
-                <InputText
-                  wrapped={false}
-                  rows={5}
-                  placeholder="Description for the step"
-                />
-              </div>
+              <InputText
+                wrapped={false}
+                rows={5}
+                placeholder="Description for the step"
+              />
             ),
-            placeholder: "Description for the step",
-            name: "description",
+            name: "des",
             style: { flexGrow: 1 },
           },
           {
-            function: (
-              <UploadImage
-                required={false}
-                fileList={currMethodImg}
-                setFileList={(img) => {
-                  setCurrMethodImg(img);
-                  setMethodImgList((props) => [...props, img]);
-                }}
-              />
-            ),
-            name: "methodImage",
+            isFile: true,
+            function: (others) => {
+              return (
+                <UploadImage
+                  required={false}
+                  fileList={currMethodImg}
+                  name="picture"
+                  setFileList={(img) => {
+                    setCurrMethodImg(img);
+                    setMethodImgList((props) => [...props, img]);
+                  }}
+                  others={others}
+                />
+              );
+              // return (
+              //   <InputText
+              //     wrapped={false}
+              //     rows={5}
+              //     placeholder="Description for the step"
+              //   />
+              // );
+            },
+            name: "picture",
           },
         ]}
       />

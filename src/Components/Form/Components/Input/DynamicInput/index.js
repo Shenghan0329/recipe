@@ -1,12 +1,14 @@
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Space } from "antd";
+import UploadImage from "../../UploadImage";
 
-// Sample item: {name, label, function}
+// Sample item: {name, label, function, isFile}
 const DynamicInput = ({
   label = "List",
   name = "users",
   placeholder = "Add field",
   items = [],
+  isFile = false,
 }) => {
   return (
     <Form.Item label={label} style={{ marginBottom: 0 }}>
@@ -23,16 +25,26 @@ const DynamicInput = ({
                   gap: "10px",
                 }}
               >
-                {items.map((item) => {
-                  return (
+                {items.map((item, index) => {
+                  let a;
+                  if (isFile) a = item.function({ ...restField });
+                  console.log(item.function);
+                  return !item.isFile ? (
                     <Form.Item
-                      name={item.name || ""}
+                      name={[name, item.name || ""]}
+                      key={name + index}
                       label={item.label || ""}
                       style={item.style || {}}
                       {...restField}
                     >
-                      {item.function}
+                      <div>{item.function}</div>
                     </Form.Item>
+                  ) : (
+                    item.function({
+                      key: name + index,
+                      name: [name, item.name || ""],
+                      ...restField,
+                    })
                   );
                 })}
                 <MinusCircleOutlined onClick={() => remove(name)} />

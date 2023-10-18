@@ -1,14 +1,24 @@
 import React, { useState } from "react";
-import { PlusOutlined } from "@ant-design/icons";
-import { message, Upload, Form } from "antd";
+import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
+import { message, Upload, Form, Button } from "antd";
 
 const UploadImage = ({
-  fileList,
+  label = "",
+  name = label,
+  fileList = [],
   setFileList,
   multi = false,
-  required = true,
+  required = false,
+  others = {},
 }) => {
   const [imageUrl, setImageUrl] = useState("");
+  const handleOnChange = (e) => {
+    console.log("Upload event:", e);
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e?.fileList?.map((f) => f.originFileObj);
+  };
   const beforeUpload = (file) =>
     new Promise((resolve, reject) => {
       const isJpgOrPng =
@@ -16,13 +26,11 @@ const UploadImage = ({
       if (!isJpgOrPng) {
         message.error("You can only upload JPG/PNG file!");
         reject(file);
-        return;
       }
       const isLt2M = file.size / 1024 / 1024 < 2;
       if (!isLt2M) {
         message.error("Image must smaller than 2MB!");
         reject(file);
-        return;
       }
       !multi ? setFileList([file]) : setFileList((files) => [...files, file]);
       resolve(file);
@@ -38,33 +46,49 @@ const UploadImage = ({
       getBase64(info.file.originFileObj, (url) => {
         setImageUrl(url);
       });
+      info.file.status = "done";
     } else {
       setImageUrl("");
     }
+    console.log(info.fileList);
   };
   return (
-    <Upload
-      name="avatar"
-      listType="picture-card"
-      className="avatar-uploader"
-      showUploadList={!multi ? false : true}
-      fileList={fileList}
-      beforeUpload={beforeUpload}
-      onChange={handleChange}
-      customRequest={() => {}}
+    <Form.Item
+      label={label}
+      name={name}
+      valuePropName="fileList"
+      getValueFromEvent={handleOnChange}
+      rules={[
+        {
+          required: { required },
+        },
+      ]}
+      {...others}
     >
-      {imageUrl && !multi ? (
-        <img
-          src={imageUrl}
-          alt="avatar"
-          style={{
-            width: "100%",
-          }}
-        />
-      ) : (
-        <PlusOutlined />
-      )}
-    </Upload>
+      <Upload
+        name="avatar"
+        listType="picture-card"
+        className="avatar-uploader"
+        showUploadList={!multi ? false : true}
+        fileList={fileList}
+        maxCount={!multi ? 1 : 10}
+        beforeUpload={beforeUpload}
+        onChange={handleChange}
+        customRequest={() => {}}
+      >
+        {imageUrl && !multi ? (
+          <img
+            src={imageUrl}
+            alt="avatar"
+            style={{
+              width: "100%",
+            }}
+          />
+        ) : (
+          <PlusOutlined />
+        )}
+      </Upload>
+    </Form.Item>
   );
 };
 

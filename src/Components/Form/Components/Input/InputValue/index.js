@@ -10,9 +10,10 @@ const InputValue = ({
   placeholder = "",
   name = label,
   wrapped = true,
+  others = {},
 }) => {
   return wrapped ? (
-    <Form.Item name={name} label={label}>
+    <Form.Item name={name} label={label} {...others}>
       <InputNumber
         min={min}
         max={max}
