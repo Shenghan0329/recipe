@@ -26,9 +26,6 @@ const DynamicInput = ({
                 }}
               >
                 {items.map((item, index) => {
-                  let a;
-                  if (isFile) a = item.function({ ...restField });
-                  console.log(item.function);
                   return !item.isFile ? (
                     <Form.Item
                       name={[name, item.name || ""]}

@@ -5,8 +5,6 @@ import { message, Upload, Form, Button } from "antd";
 const UploadImage = ({
   label = "",
   name = label,
-  fileList = [],
-  setFileList,
   multi = false,
   required = false,
   others = {},
@@ -32,7 +30,6 @@ const UploadImage = ({
         message.error("Image must smaller than 2MB!");
         reject(file);
       }
-      !multi ? setFileList([file]) : setFileList((files) => [...files, file]);
       resolve(file);
     });
   const getBase64 = (img, callback) => {
@@ -70,7 +67,6 @@ const UploadImage = ({
         listType="picture-card"
         className="avatar-uploader"
         showUploadList={!multi ? false : true}
-        fileList={fileList}
         maxCount={!multi ? 1 : 10}
         beforeUpload={beforeUpload}
         onChange={handleChange}

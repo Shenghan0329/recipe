@@ -50,21 +50,7 @@ const Add = () => {
   const { dataSize, setDataSize } = useDataContext();
   const formRef = React.useRef(null);
 
-  const [imgList, setImgList] = useState(null);
-  const [currMethodImg, setCurrMethodImg] = useState(null);
-  const [methodImgList, setMethodImgList] = useState([]); // 2D array
-
-  // const handleOnChange = ({ fileList }) => {
-  //   console.log(fileList);
-  //   return fileList.map((file) => ({
-  //     status: file.status,
-  //     uid: file.uid,
-  //     url: file.response ? file.response.data.url : file.url,
-  //   }));
-  // };
   const onFinish = (values) => {
-    let file = values.file;
-    console.log(file);
     console.log(values);
   };
   const onReset = () => {
@@ -77,38 +63,9 @@ const Add = () => {
     });
   };
 
-  const onDiffChange = (value) => {
-    // switch (value) {
-    //   case "0":
-    //     formRef.current?.setFieldsValue({
-    //       note: "Hi, man!",
-    //     });
-    //     break;
-    //   case "1":
-    //     formRef.current?.setFieldsValue({
-    //       note: "Hi, lady!",
-    //     });
-    //     break;
-    //   case "2":
-    //     formRef.current?.setFieldsValue({
-    //       note: "Hi, lady!",
-    //     });
-    //     break;
-    //   case "3":
-    //     formRef.current?.setFieldsValue({
-    //       note: "Hi, lady!",
-    //     });
-    //     break;
-    //   default:
-    //     break;
-    // }
-  };
   useEffect(() => {
     console.log(dataSize);
   }, [dataSize]);
-  useEffect(() => {
-    console.log(imgList);
-  }, [imgList]);
 
   return (
     <Form
@@ -127,12 +84,7 @@ const Add = () => {
         name="name"
         placeholder="Please enter the Dish Name"
       />
-      <UploadImage
-        fileList={imgList}
-        setFileList={setImgList}
-        label="Dish Image"
-        name="img"
-      />
+      <UploadImage label="Dish Image" name="img" />
       <Options
         label="Method"
         name="method"
@@ -156,7 +108,7 @@ const Add = () => {
         placeholder="Add a new Tag"
         items={[
           {
-            function: <InputText rows={2} wrapped={false} />,
+            function: <InputText rows={1} wrapped={false} />,
             label: "",
             name: "tagName",
           },
@@ -221,24 +173,8 @@ const Add = () => {
             isFile: true,
             function: (others) => {
               return (
-                <UploadImage
-                  required={false}
-                  fileList={currMethodImg}
-                  name="picture"
-                  setFileList={(img) => {
-                    setCurrMethodImg(img);
-                    setMethodImgList((props) => [...props, img]);
-                  }}
-                  others={others}
-                />
+                <UploadImage required={false} name="picture" others={others} />
               );
-              // return (
-              //   <InputText
-              //     wrapped={false}
-              //     rows={5}
-              //     placeholder="Description for the step"
-              //   />
-              // );
             },
             name: "picture",
           },
