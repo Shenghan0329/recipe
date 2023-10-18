@@ -16,10 +16,18 @@ const Gallery = ({ data, galleryItem = GalleryCard }) => {
       <Carousel autoplay>
         {data?.length > 8
           ? data?.slice(0, 8).map((item, index) => {
-              return <div style={contentStyle}>{galleryItem(item)}</div>;
+              return (
+                <div key={item.id + index} style={contentStyle}>
+                  {galleryItem(item)}
+                </div>
+              );
             })
           : data?.map((item, index) => {
-              return <div style={contentStyle}>{galleryItem(item)}</div>;
+              return (
+                <div key={item.id + index} style={contentStyle}>
+                  {galleryItem(item)}
+                </div>
+              );
             })}
       </Carousel>
     </Loading>
