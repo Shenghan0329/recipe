@@ -8,10 +8,10 @@ const DynamicInput = ({
   name = "users",
   placeholder = "Add field",
   items = [],
-  isFile = false,
+  required = false,
 }) => {
   return (
-    <Form.Item label={label} style={{ marginBottom: 0 }}>
+    <Form.Item label={label} style={{ marginBottom: 0 }} required={required}>
       <Form.List name={name}>
         {(fields, { add, remove }) => (
           <>

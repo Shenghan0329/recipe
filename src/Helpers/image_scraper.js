@@ -77,28 +77,6 @@ const getImages = async (names) => {
   return images;
 };
 
-// const updateAll = async (n) => {
-//   let finish = n + 10;
-
-//   if (n >= recipes.length) {
-//     return;
-//   }
-
-//   const myPromise = new Promise((resolve, reject) => {
-//     (async function () {
-//       for (let i = n; i < finish; i++) {
-//         if (i >= recipes.length) {
-//           return;
-//         } else {
-//           await updateImage(recipes[i]);
-//         }
-//       }
-//       setTimeOut(resolve("foo"), 10000);
-//     })();
-//   });
-//   myPromise.then(updateAll(finish));
-// };
-
 const updateAll = async (n) => {
   if (n >= recipes.length) return;
   console.log("===========");
@@ -118,4 +96,4 @@ const updateAll = async (n) => {
 };
 
 updateAll(0);
-// export default updateAll;
+export default updateAll;

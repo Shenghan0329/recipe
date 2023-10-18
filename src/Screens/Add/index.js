@@ -1,9 +1,9 @@
 //   readonly id: string;
-//     readonly meauID: number;
+//   readonly meauID: number;
 //   readonly name: string;
 //   readonly tags?: (string | null)[] | null;
 //   readonly img: string;
-//     readonly url: string;
+//   readonly url: string;
 //   readonly level?: string | null;
 //   readonly peopleNum?: number | null;
 //   readonly taste?: string | null;
@@ -12,14 +12,15 @@
 //   readonly accessories?: (Ingredient | null)[] | null;
 //   readonly measure?: Measure[] | null;
 //   readonly techniques?: string | null;
-//     readonly scrapyTime?: string | null;
+//   readonly scrapyTime?: string | null;
 //   readonly method?: Method | keyof typeof Method | null;
-// readonly userID: string;
+//   readonly userID: string;
 //   readonly prepareTime?: string | null;
 
 import { Button, Form, Space, Upload } from "antd";
 import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
+// import "dotenv/config";
 import React from "react";
 import InputText from "../../Components/Form/Components/Input/Text";
 import Options from "../../Components/Form/Components/Input/Options";
@@ -30,6 +31,8 @@ import DataContextProvider, {
   useDataContext,
 } from "../../Contexts/DataContext";
 import { User, Recipes, Method, Measure, Ingredient } from "../../models";
+import { DataStore } from "@aws-amplify/datastore";
+import storeFile from "../../Helpers/store";
 
 const layout = {
   labelCol: {
@@ -45,13 +48,62 @@ const tailLayout = {
     span: 16,
   },
 };
-
 const Add = () => {
   const { dataSize, setDataSize } = useDataContext();
   const formRef = React.useRef(null);
 
-  const onFinish = (values) => {
+  const store = async function (recipe) {
+    let fail = 0;
+    let result = { ...recipe };
+    result["url"] = "NA";
+    result["meauID"] = dataSize + 1;
+    result["peopleNum"] = parseInt(recipe.peopleNum);
+    result["tags"] = result["tags"]?.map((item) => item.tagName);
+    result["mainIngredient"] = result.mainIngredient.map(
+      (item) => new Ingredient(item)
+    );
+    result["accessories"] = result.accessories.map(
+      (item) => new Ingredient(item)
+    );
+    let img = await storeFile(result["img"][0]);
+    if (img === -1) return -1;
+    result["img"] = img;
+    for (let i = 0; i < result["measure"].length; i++) {
+      const res = await parseMeasure(result["measure"][i], i + 1);
+      if (res === -1) {
+        fail = -1;
+        console.log("Fail in uploading");
+        break;
+      }
+      result["measure"][i] = res;
+    }
+    if (fail === -1) return -1;
+    result["method"] = Method[recipe.method];
+    result.scrapyTime = new Date().toISOString();
+    // result.userID = process.env.ADMIN_USER;
+    const user = await DataStore.query(User);
+    result.userID = user[0].id;
+    console.log(result);
+    try {
+      await DataStore.save(new Recipes(result));
+      return 0;
+    } catch (error) {
+      console.log("Failed to store to database" + error);
+      return -1;
+    }
+  };
+
+  const parseMeasure = async (measure, index) => {
+    let storedLink = await storeFile(measure.picture[0]);
+    if (storedLink === -1) return -1;
+    measure.picture = [storedLink];
+    measure.step = index + "";
+    console.log(measure);
+    return new Measure(measure);
+  };
+  const onFinish = async (values) => {
     console.log(values);
+    store(values);
   };
   const onReset = () => {
     formRef.current?.resetFields();
@@ -100,6 +152,7 @@ const Add = () => {
         placeholder="Please enter the difficulty level"
       />
       <InputText label="Cook Time" name="cookTime" rows={1} />
+      <InputText label="Prepare Time" name="prepareTime" rows={1} />
       <InputValue label="Servings" name="peopleNum" />
       <InputText label="Taste" name="taste" rows={1} />
       <DynamicInput
@@ -117,6 +170,7 @@ const Add = () => {
       <DynamicInput
         label="Ingredients"
         name="mainIngredient"
+        required={true}
         placeholder="Add an Ingredient"
         items={[
           {
@@ -139,6 +193,7 @@ const Add = () => {
       <DynamicInput
         label="Accessories"
         name="accessories"
+        required={true}
         placeholder="Add an Accessory"
         items={[
           {
@@ -155,7 +210,8 @@ const Add = () => {
       />
       <DynamicInput
         label="Steps"
-        name="measures"
+        name="measure"
+        required={true}
         placeholder="Add a step"
         items={[
           {
