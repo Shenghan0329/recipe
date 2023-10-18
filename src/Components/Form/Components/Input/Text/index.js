@@ -8,7 +8,7 @@ const InputText = ({
   required = true,
   rows = 1,
   wrapped = true,
-  style = {},
+  others = {},
 }) => {
   return wrapped ? (
     <Form.Item
@@ -19,7 +19,7 @@ const InputText = ({
           required: { required },
         },
       ]}
-      style={style}
+      {...others}
     >
       {rows === 1 ? (
         <Input placeholder={placeholder} />
