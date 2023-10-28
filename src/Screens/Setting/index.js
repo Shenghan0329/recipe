@@ -60,7 +60,11 @@ const Setting = () => {
           )}
           {userData.length > 0 && (
             <React.Fragment>
-              <RecipeList data={userData} pageSize={4} />
+              <Title level={4}>My Recipes</Title>
+              <RecipeList
+                data={userData}
+                pageSize={userData.length > 4 ? 4 : userData.length}
+              />
             </React.Fragment>
           )}
           <Button onClick={signOut}>Sign Out</Button>
