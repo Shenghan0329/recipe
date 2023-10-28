@@ -102,7 +102,7 @@ type EagerRecipes = {
   readonly techniques?: string | null;
   readonly scrapyTime?: string | null;
   readonly method?: Method | keyof typeof Method | null;
-  readonly userID: string;
+  readonly userID?: string | null;
   readonly prepareTime?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -129,7 +129,7 @@ type LazyRecipes = {
   readonly techniques?: string | null;
   readonly scrapyTime?: string | null;
   readonly method?: Method | keyof typeof Method | null;
-  readonly userID: string;
+  readonly userID?: string | null;
   readonly prepareTime?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;

@@ -227,7 +227,7 @@ export const schema = {
                     "name": "userID",
                     "isArray": false,
                     "type": "ID",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "prepareTime": {
@@ -360,5 +360,5 @@ export const schema = {
         }
     },
     "codegenVersion": "3.4.4",
-    "version": "5176b463f72d1046adced14b8a67a10c"
+    "version": "e033b86966a1278eeb9516fab122b4e1"
 };
