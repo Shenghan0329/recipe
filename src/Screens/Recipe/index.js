@@ -78,7 +78,7 @@ const Recipe = () => {
   return (
     <>
       <Title level={1}>{recipe?.name}</Title>
-      {userID && (
+      {userID && user?.name && (
         <>
           <Text strong style={styles.middle}>
             Author:{" "}

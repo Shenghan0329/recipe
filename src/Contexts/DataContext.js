@@ -34,7 +34,7 @@ const DataContextProvider = ({ children }) => {
       });
     }
     if (singleData.length === 0) {
-      DataStore.query(Recipes, (recipe) => recipe.peopleNum.eq(2)).then(
+      DataStore.query(Recipes, (recipe) => recipe.peopleNum.eq(1)).then(
         (found) => {
           setSingleData(found);
         }

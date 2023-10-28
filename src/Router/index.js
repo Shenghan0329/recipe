@@ -17,7 +17,7 @@ const Router = () => {
       <Route path="/recipes/:id" element={<Recipe />} />
       <Route path="/contribute" element={<Contribute />} />
       <Route path="/setting" element={<Setting />} />
-      <Route path="/article" element={<Article />} />
+      {/* <Route path="/article" element={<Article />} /> */}
       <Route path="/*" element={<Error />} />
     </Routes>
   );

@@ -7,15 +7,8 @@ const { Header, Content, Footer } = Layout;
 
 const Head = () => {
   const navigate = useNavigate();
-  const navList = ["Home", "Listing", "Articles", "Add Recipe", "Contribute"];
-  const linkList = [
-    "/",
-    "/recipes",
-    "/article",
-    "/add",
-    "/contribute",
-    "/setting",
-  ];
+  const navList = ["Home", "Listing", "Add Recipe", "Contribute"];
+  const linkList = ["/", "/recipes", "/add", "/contribute", "/setting"];
 
   const setting = { key: "6", icon: <SettingOutlined /> };
 
