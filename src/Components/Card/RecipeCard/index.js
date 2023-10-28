@@ -1,5 +1,6 @@
 import { Card } from "antd";
 import { useNavigate } from "react-router-dom";
+import Image from "../../Image";
 import "./style.css";
 const { Meta } = Card;
 
@@ -16,10 +17,10 @@ const RecipeCard = (item) => {
         width: "100%",
         aspectRatio: 4 / 3,
       }}
-      cover={<img alt="delicious food" src={item.img} />}
+      cover={<Image width="100%" src={item?.img} />}
       //   onClick={onClick}
     >
-      <Meta title={item.meauID + item.name} taste={item.taste} />
+      <Meta title={item.meauID + " " + item.name} taste={item.taste} />
     </Card>
   );
 };

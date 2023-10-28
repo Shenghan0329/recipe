@@ -47,7 +47,7 @@ type Recipes @model @auth(rules: [{allow: public}]) {
   techniques: String
   scrapyTime: AWSDateTime
   method: Method
-  userID: ID! @index(name: "byUser")
+  userID: ID @index(name: "byUser")
   prepareTime: String
 }
  

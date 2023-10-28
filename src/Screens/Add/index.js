@@ -17,9 +17,10 @@
 //   readonly userID: string;
 //   readonly prepareTime?: string | null;
 
-import { Button, Form, Space, Upload } from "antd";
+import { Button, Form, Space, Alert } from "antd";
 import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 // import "dotenv/config";
 import React from "react";
 import InputText from "../../Components/Form/Components/Input/Text";
@@ -27,9 +28,8 @@ import Options from "../../Components/Form/Components/Input/Options";
 import InputValue from "../../Components/Form/Components/Input/InputValue";
 import DynamicInput from "../../Components/Form/Components/Input/DynamicInput";
 import UploadImage from "../../Components/Form/Components/UploadImage";
-import DataContextProvider, {
-  useDataContext,
-} from "../../Contexts/DataContext";
+import { useDataContext } from "../../Contexts/DataContext";
+import { useAuthContext } from "../../Contexts/AuthContext";
 import { User, Recipes, Method, Measure, Ingredient } from "../../models";
 import { DataStore } from "@aws-amplify/datastore";
 import storeFile from "../../Helpers/store";
@@ -50,8 +50,20 @@ const tailLayout = {
 };
 const Add = () => {
   const { dataSize, setDataSize } = useDataContext();
+  const { dbUser } = useAuthContext();
   const formRef = React.useRef(null);
+  const navigate = useNavigate();
+  const [success, setSuccess] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
+  const parseMeasure = async (measure, index) => {
+    let storedLink = await storeFile(measure.picture[0]);
+    if (storedLink === -1) return -1;
+    measure.picture = [storedLink];
+    measure.step = index + "";
+    console.log(measure);
+    return new Measure(measure);
+  };
   const store = async function (recipe) {
     let fail = 0;
     let result = { ...recipe };
@@ -81,8 +93,7 @@ const Add = () => {
     result["method"] = Method[recipe.method];
     result.scrapyTime = new Date().toISOString();
     // result.userID = process.env.ADMIN_USER;
-    const user = await DataStore.query(User);
-    result.userID = user[0].id;
+    result.userID = dbUser?.id;
     console.log(result);
     try {
       await DataStore.save(new Recipes(result));
@@ -92,27 +103,21 @@ const Add = () => {
       return -1;
     }
   };
-
-  const parseMeasure = async (measure, index) => {
-    let storedLink = await storeFile(measure.picture[0]);
-    if (storedLink === -1) return -1;
-    measure.picture = [storedLink];
-    measure.step = index + "";
-    console.log(measure);
-    return new Measure(measure);
-  };
   const onFinish = async (values) => {
     console.log(values);
-    store(values);
+    try {
+      store(values);
+      setSuccess(true);
+    } catch (e) {
+      console.log("OnFinish Error: " + e);
+      setSuccess(false);
+    }
   };
   const onReset = () => {
     formRef.current?.resetFields();
   };
-  const onFill = () => {
-    formRef.current?.setFieldsValue({
-      note: "Hello world!",
-      difficulty: "0",
-    });
+  const toBack = () => {
+    navigate(-1);
   };
 
   useEffect(() => {
@@ -238,16 +243,26 @@ const Add = () => {
       />
       <InputText label="Techniques" name="techniques" rows={4} />
       <Form.Item {...tailLayout}>
-        <Button type="primary" htmlType="submit">
+        <Button
+          type="primary"
+          htmlType="submit"
+          onClick={() => setSubmitted(true)}
+        >
           Submit
         </Button>
         <Button htmlType="button" onClick={onReset}>
           Reset
         </Button>
-        <Button type="link" htmlType="button" onClick={onFill}>
-          Fill form
+        <Button type="link" htmlType="button" onClick={toBack}>
+          Back
         </Button>
       </Form.Item>
+      {submitted && success && (
+        <Alert message="Submit success!" type="success" />
+      )}
+      {submitted && !success && (
+        <Alert message="Please fill all required fields" type="error" />
+      )}
     </Form>
   );
 };

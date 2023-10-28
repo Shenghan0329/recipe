@@ -3,6 +3,7 @@ import { useState } from "react";
 import { DataStore } from "aws-amplify";
 import { Recipes } from "../models";
 import { useContext } from "react";
+import { useAuthContext } from "./AuthContext";
 
 const DataContext = createContext({});
 const DataContextProvider = ({ children }) => {
@@ -13,6 +14,9 @@ const DataContextProvider = ({ children }) => {
   const [bakeData, setBakeData] = useState([]);
   const [customData, setCustomData] = useState([]);
   const [filterData, setFilterData] = useState([]);
+  const [userData, setUserData] = useState([]);
+
+  const { dbUser } = useAuthContext();
   useEffect(() => {
     if (data.length === 0) {
       DataStore.query(Recipes).then((totalData) => {
@@ -30,7 +34,7 @@ const DataContextProvider = ({ children }) => {
       });
     }
     if (singleData.length === 0) {
-      DataStore.query(Recipes, (recipe) => recipe.peopleNum.eq(2)).then(
+      DataStore.query(Recipes, (recipe) => recipe.peopleNum.eq(1)).then(
         (found) => {
           setSingleData(found);
         }
@@ -44,6 +48,16 @@ const DataContextProvider = ({ children }) => {
       );
     }
   }, []);
+  useEffect(() => {
+    if (dbUser?.id) {
+      DataStore.query(Recipes, (recipe) => recipe.userID.eq(dbUser?.id)).then(
+        (found) => {
+          setUserData(found);
+          console.log(found);
+        }
+      );
+    }
+  }, [dbUser]);
 
   return (
     <DataContext.Provider
@@ -60,6 +74,7 @@ const DataContextProvider = ({ children }) => {
         setSingleData,
         bakeData,
         setBakeData,
+        userData,
         dataSize,
         setDataSize,
       }}

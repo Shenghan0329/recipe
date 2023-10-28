@@ -27,9 +27,9 @@ const styles = {
 const Recipe = () => {
   const { id } = useParams();
   const [recipe, setRecipe] = useState({});
-  const [userID, setUserID] = useState("");
+  const [userID, setUserID] = useState(null);
   const [user, setUser] = useState({});
-  const [scrapyTime, setScrapyTime] = useState("");
+  const [scrapyTime, setScrapyTime] = useState(null);
   const [func, setFunc] = useState("");
   const { data, setData } = useDataContext();
 
@@ -60,10 +60,14 @@ const Recipe = () => {
     try {
       time = recipe?.scrapyTime?.subString(0, 10);
     } catch (e) {
-      time = "Default Time";
+      time = null;
     }
     setScrapyTime(time);
-    setUserID(recipe?.userID);
+    setUserID(
+      recipe?.userID === "15632138-eb38-4218-868f-3ad7265aa5bb"
+        ? null
+        : recipe?.userID
+    );
   }, [recipe]);
   useEffect(() => {
     DataStore.query(User, (item) => item.id.eq(userID)).then((results) => {
@@ -74,10 +78,14 @@ const Recipe = () => {
   return (
     <>
       <Title level={1}>{recipe?.name}</Title>
-      <Text strong style={styles.middle}>
-        Author:{" "}
-      </Text>
-      <Text style={styles.middle}>{user?.name}</Text>
+      {userID && user?.name && (
+        <>
+          <Text strong style={styles.middle}>
+            Author:{" "}
+          </Text>
+          <Text style={styles.middle}>{user?.name}</Text>
+        </>
+      )}
       <Image
         width={400}
         height={400}

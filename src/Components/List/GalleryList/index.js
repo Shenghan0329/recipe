@@ -3,14 +3,7 @@ import FlatList from "../FlatList";
 import GalleryCard from "../../Card/GalleryCard";
 
 const GalleryList = ({ pageSize, filters }) => {
-  return (
-    <FlatList
-      data={recipes}
-      listItem={GalleryCard}
-      pageSize={pageSize}
-      filters={filters}
-    />
-  );
+  return <FlatList data={recipes} listItem={GalleryCard} pageSize={pageSize} />;
 };
 
 export default GalleryList;

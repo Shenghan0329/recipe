@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import Loading from "../Loading";
+import { getUrl } from "../../Helpers/store";
 
 const Image = ({
   src = "",
@@ -6,6 +8,18 @@ const Image = ({
   width = 200,
   margins = [0, 0, 0, 0],
 }) => {
+  const [img, setImg] = useState("");
+
+  const setImage = async (src) => {
+    let image = await getUrl(src);
+    setImg(image);
+  };
+  useEffect(() => {
+    if (src) {
+      setImage(src);
+    }
+  }, [src]);
+
   const customStyle = {
     height: height,
     width: width,
@@ -13,14 +27,14 @@ const Image = ({
     marginBottom: margins[1],
     marginLeft: margins[2],
     marginRight: margins[3],
-    backgroundImage: "url(" + src + ")",
+    backgroundImage: "url(" + img + ")",
     backgroundPosition: "center center",
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     width: width,
   };
   return (
-    <Loading width={width} height={height} data={src}>
+    <Loading width={width} height={height} data={img}>
       <div style={customStyle}></div>
     </Loading>
   );
