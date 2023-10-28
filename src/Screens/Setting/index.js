@@ -4,11 +4,13 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import { useAuthContext } from "../../Contexts/AuthContext";
+import { useDataContext } from "../../Contexts/DataContext";
 import React from "react";
 import "@aws-amplify/ui-react/styles.css";
 import Profile from "../ProfileScreen";
 import Image from "../../Components/Image";
 import Loading from "../../Components/Loading";
+import RecipeList from "../../Components/List/RecipeList";
 import { getUrl } from "../../Helpers/store";
 
 const { Title, Text } = Typography;
@@ -16,6 +18,7 @@ const { Title, Text } = Typography;
 const Setting = () => {
   const { dbUser, authUser, setReset, setAuthUser, setDbUser } =
     useAuthContext();
+  const { userData } = useDataContext();
   const [toEdit, setToEdit] = useState(false);
   const navigation = useNavigate();
 
@@ -54,6 +57,11 @@ const Setting = () => {
               <Title level={4}>My Profile</Title>
               <Text>{dbUser?.introduce}</Text>
             </div>
+          )}
+          {userData.length > 0 && (
+            <React.Fragment>
+              <RecipeList data={userData} pageSize={4} />
+            </React.Fragment>
           )}
           <Button onClick={signOut}>Sign Out</Button>
           <Button onClick={edit}>Edit</Button>
