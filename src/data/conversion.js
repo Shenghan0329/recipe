@@ -102,7 +102,6 @@ const convertOne = async function () {
 };
 
 const convertDB = async function () {
-  console.log(recipeList);
   for (let i = 3326; i < recipeList.length; i++) {
     if (i % 200) {
       console.log(
@@ -120,7 +119,6 @@ const convertDB = async function () {
 
 export default async function setDefaultUser() {
   DataStore.query(User).then(async (results) => {
-    console.log(results);
     if (results.length === 0) {
       //   const defaultUser = await DataStore.save(
       //     new User({

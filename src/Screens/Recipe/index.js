@@ -35,16 +35,13 @@ const Recipe = () => {
 
   useEffect(() => {
     DataStore.query(Recipes, id).then((result) => {
-      console.log(result);
+      // console.log(result);
       setRecipe(result);
     });
   }, []);
   useEffect(() => {
-    console.log(data);
-  }, [data]);
-  useEffect(() => {
     const tags = recipe?.tags;
-    console.log(tags);
+    // console.log(tags);
     let f = "";
     if (tags) {
       for (let i = 0; i < tags.length; i++) {
