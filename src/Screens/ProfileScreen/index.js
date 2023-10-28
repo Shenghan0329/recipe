@@ -1,50 +1,63 @@
 import { Button, Checkbox, Form, Input } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Auth, DataStore } from "aws-amplify";
 import { User } from "../../models";
 import { useAuthContext } from "../../Contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import UploadImage from "../../Components/Form/Components/UploadImage";
+import storeFile from "../../Helpers/store";
 
-const Profile = () => {
+const Profile = ({ afterSubmit = () => {} }) => {
   const { sub, setDbUser, dbUser } = useAuthContext();
-  const [name, setName] = useState(dbUser?.name || "");
-  const [introduce, setIntroduce] = useState(dbUser?.introduce || "");
-  const [image, setImage] = useState(dbUser?.introduce || "");
+  const [name, setName] = useState(dbUser?.name || "Please enter your name");
+  const [introduce, setIntroduce] = useState(
+    dbUser?.introduce || "Please introduce yourself"
+  );
   const navigation = useNavigate();
+  const formRef = React.useRef(null);
 
-  const createUser = async () => {
+  const createUser = async (values) => {
+    let user = { ...values };
+    let image = await storeFile(values["image"][0]);
+    if (image === -1) return -1;
+    user["image"] = image;
+    user["sub"] = sub;
     try {
       console.log(sub);
-      const user = await DataStore.save(
-        new User({
-          name,
-          introduce,
-          image,
-          sub,
-        })
-      );
-      console.log(user);
-      setDbUser(user);
+      const u = await DataStore.save(new User(user));
+      console.log(u);
+      setDbUser(u);
     } catch (e) {
       console.log("Errors", e.message);
+      return -1;
     }
+    return 0;
   };
-  const updateUser = async () => {
-    await DataStore.save(
-      User.copyOf(dbUser, (updated) => {
-        updated.name = name;
-        updated.introduce = introduce;
-        updated.image = image;
-      })
-    );
-    navigation.goBack();
+  const updateUser = async (values) => {
+    let image = await storeFile(values["image"][0]);
+    if (image === -1) return -1;
+    try {
+      await DataStore.save(
+        User.copyOf(dbUser, (updated) => {
+          updated.name = values.name;
+          updated.introduce = values.introduce;
+          updated.image = image;
+        })
+      );
+    } catch (e) {
+      console.log("Errors", e.message);
+      return -1;
+    }
+    return 0;
   };
-  const onSave = async () => {
+  const onSave = async (values) => {
+    let res;
     if (dbUser) {
-      await updateUser();
+      res = await updateUser(values);
     } else {
-      await createUser();
+      res = await createUser(values);
     }
+    console.log(res == 0 ? "Save success" : "Save failed");
   };
   const signOut = () => {
     Auth.signOut();
@@ -52,6 +65,8 @@ const Profile = () => {
 
   const onFinish = (values) => {
     console.log("Success:", values);
+    onSave(values);
+    afterSubmit();
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
@@ -69,8 +84,10 @@ const Profile = () => {
       style={{
         maxWidth: 600,
       }}
+      ref={formRef}
       initialValues={{
-        remember: true,
+        name: dbUser?.name ? name : "",
+        introduce: dbUser?.introduce ? introduce : "",
       }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
@@ -78,7 +95,7 @@ const Profile = () => {
     >
       <Form.Item
         label="Username"
-        name="username"
+        name="name"
         rules={[
           {
             required: true,
@@ -87,13 +104,7 @@ const Profile = () => {
         ]}
         style={{ paddingTop: 50 }}
       >
-        <Input
-          placeholder={name}
-          onChange={(evt) => {
-            console.log(evt);
-            setName(evt.target.value);
-          }}
-        />
+        <Input placeholder={name} />
       </Form.Item>
 
       <Form.Item
@@ -106,24 +117,10 @@ const Profile = () => {
           },
         ]}
       >
-        <Input
-          placeholder={introduce}
-          onChange={(evt) => {
-            console.log(evt);
-            setIntroduce(evt.target.value);
-          }}
-        />
+        <Input placeholder={introduce} />
       </Form.Item>
 
-      <Form.Item label="image" name="image">
-        <Input
-          placeholder={image}
-          onChange={(evt) => {
-            console.log(evt);
-            setImage(evt.target.value);
-          }}
-        />
-      </Form.Item>
+      <UploadImage label="Profile Image" name="image" required={false} />
 
       <Form.Item
         wrapperCol={{
@@ -131,16 +128,10 @@ const Profile = () => {
           span: 16,
         }}
       >
-        <Button type="primary" onClick={onSave}>
-          Save
+        <Button type="primary" htmlType="submit">
+          Submit
         </Button>
       </Form.Item>
-      <Form.Item
-        wrapperCol={{
-          offset: 8,
-          span: 16,
-        }}
-      ></Form.Item>
     </Form>
   );
 };

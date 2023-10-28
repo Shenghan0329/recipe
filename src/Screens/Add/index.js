@@ -52,6 +52,14 @@ const Add = () => {
   const { dataSize, setDataSize } = useDataContext();
   const formRef = React.useRef(null);
 
+  const parseMeasure = async (measure, index) => {
+    let storedLink = await storeFile(measure.picture[0]);
+    if (storedLink === -1) return -1;
+    measure.picture = [storedLink];
+    measure.step = index + "";
+    console.log(measure);
+    return new Measure(measure);
+  };
   const store = async function (recipe) {
     let fail = 0;
     let result = { ...recipe };
@@ -91,15 +99,6 @@ const Add = () => {
       console.log("Failed to store to database" + error);
       return -1;
     }
-  };
-
-  const parseMeasure = async (measure, index) => {
-    let storedLink = await storeFile(measure.picture[0]);
-    if (storedLink === -1) return -1;
-    measure.picture = [storedLink];
-    measure.step = index + "";
-    console.log(measure);
-    return new Measure(measure);
   };
   const onFinish = async (values) => {
     console.log(values);

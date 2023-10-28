@@ -19,7 +19,7 @@ const RecipeCard = (item) => {
       cover={<img alt="delicious food" src={item.img} />}
       //   onClick={onClick}
     >
-      <Meta title={item.meauID + item.name} taste={item.taste} />
+      <Meta title={item.meauID + " " + item.name} taste={item.taste} />
     </Card>
   );
 };
