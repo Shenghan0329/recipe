@@ -10,7 +10,7 @@ const Head = () => {
   const navList = ["Home", "Listing", "Add Recipe", "Contribute"];
   const linkList = ["/", "/recipes", "/add", "/contribute", "/setting"];
 
-  const setting = { key: "6", icon: <SettingOutlined /> };
+  const setting = { key: "5", icon: <SettingOutlined /> };
 
   const navItems = navList.map((item, index) => {
     const key = index + 1;

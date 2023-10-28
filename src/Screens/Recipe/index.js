@@ -35,7 +35,7 @@ const Recipe = () => {
 
   useEffect(() => {
     DataStore.query(Recipes, id).then((result) => {
-      // console.log(result);
+      console.log(result);
       setRecipe(result);
     });
   }, []);
@@ -128,12 +128,18 @@ const Recipe = () => {
           />
         </Col>
       </Row>
-
-      <Title level={3}>Steps</Title>
-      <TextList data={recipe?.measure || []} listItem={StepCard} />
-
-      <Title level={3}>Techniques</Title>
-      <Text style={styles.middle}>{recipe?.techniques}</Text>
+      {recipe?.measure && recipe?.measure.length !== 0 && (
+        <>
+          <Title level={3}>Steps</Title>
+          <TextList data={recipe?.measure || []} listItem={StepCard} />
+        </>
+      )}
+      {recipe?.techniques && (
+        <>
+          <Title level={3}>Techniques</Title>
+          <Text style={styles.middle}>{recipe?.techniques}</Text>
+        </>
+      )}
     </>
   );
 };
