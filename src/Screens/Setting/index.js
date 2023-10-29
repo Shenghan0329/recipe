@@ -45,7 +45,7 @@ const Setting = () => {
       {!authUser ? (
         <React.Fragment>
           <Title level={2}>Setting</Title>
-          <Loading />
+          <Loading aspectRatio="3/2" />
         </React.Fragment>
       ) : dbUser && !toEdit ? (
         <React.Fragment>

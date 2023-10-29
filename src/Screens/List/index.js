@@ -7,10 +7,9 @@ import { all } from "axios";
 const { Title } = Typography;
 
 const List = () => {
-  const { data, easyData, customData, filterData, singleData, bakeData } =
-    useDataContext();
-  const dataTypeList = [data, easyData, customData, singleData, bakeData];
-  const dataNameList = ["All", "Easy", "Custom", "For one person", "Baked"];
+  const { data, easyData, singleData, bakeData } = useDataContext();
+  const dataTypeList = [data, easyData, singleData, bakeData];
+  const dataNameList = ["All", "Easy", "For one person", "Baked"];
   const [d, setD] = useState(0);
   const items = dataTypeList.map((ele, index) => {
     return {
@@ -29,20 +28,6 @@ const List = () => {
     };
   });
 
-  // [
-  //   {
-  //     key: "1",
-  //     label: (
-  //       <a
-  //         target="_blank"
-  //         rel="noopener noreferrer"
-  //         href="https://www.antgroup.com"
-  //       >
-  //         1st menu item
-  //       </a>
-  //     ),
-  //   },
-  // ];
   return (
     <>
       <div

@@ -49,6 +49,9 @@ const DataContextProvider = ({ children }) => {
     }
   }, []);
   useEffect(() => {
+    console.log(data);
+  }, [data]);
+  useEffect(() => {
     if (dbUser?.id) {
       DataStore.query(Recipes, (recipe) => recipe.userID.eq(dbUser?.id)).then(
         (found) => {

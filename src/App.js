@@ -1,6 +1,7 @@
 import Router from "./Router";
 import { Layout } from "antd";
 import { BrowserRouter } from "react-router-dom";
+import { useState } from "react";
 import { Amplify } from "aws-amplify";
 import config from "./aws-exports";
 import Head from "./Layout/Head";
@@ -9,6 +10,7 @@ import Foot from "./Layout/Foot";
 import DataContextProvider from "./Contexts/DataContext";
 import updateAll from "./data/updateImage";
 import AuthContextProvider from "./Contexts/AuthContext";
+import useDeviceSize from "./Components/Helper/screenInfo";
 
 Amplify.configure(config);
 
@@ -16,6 +18,7 @@ Amplify.configure(config);
 const { Content } = Layout;
 
 const App = () => {
+  const [width, height] = useDeviceSize();
   return (
     <BrowserRouter>
       <AuthContextProvider>
@@ -25,7 +28,7 @@ const App = () => {
             <Content
               style={{
                 padding: "0 50px",
-                width: "70%",
+                width: width > 1200 ? "70%" : "100%",
               }}
             >
               <Router />

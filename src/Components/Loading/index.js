@@ -1,7 +1,7 @@
 import { Spin } from "antd";
 import { useEffect, useState } from "react";
 
-const Loading = ({ children, width = 300, height = 100, data = [] }) => {
+const Loading = ({ children, width = 300, aspectRatio = "3/1", data = [] }) => {
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     if (
@@ -18,7 +18,7 @@ const Loading = ({ children, width = 300, height = 100, data = [] }) => {
     <div
       style={{
         width: width,
-        height: height,
+        aspectRatio: aspectRatio,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",

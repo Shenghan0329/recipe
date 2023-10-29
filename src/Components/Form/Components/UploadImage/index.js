@@ -47,7 +47,7 @@ const UploadImage = ({
     } else {
       setImageUrl("");
     }
-    console.log(info.fileList);
+    // console.log(info.fileList);
   };
   return (
     <Form.Item

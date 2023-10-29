@@ -10,16 +10,14 @@ const AuthContextProvider = ({ children }) => {
   const [dbUser, setDbUser] = useState(null);
   const [reset, setReset] = useState(false);
   const sub = authUser?.attributes?.sub;
-  console.log(sub);
   useEffect(() => {
     if (reset) {
       // To always ensure we first have dbUser then authUser
       Auth.currentAuthenticatedUser({ bypassCache: true }).then((u) => {
-        console.log(u);
         if (u?.attributes) {
           DataStore.query(User, (user) => user.sub.eq(u?.attributes?.sub)).then(
             (users) => {
-              console.log(users);
+              // console.log(users);
               setDbUser(users[0]);
               setAuthUser(u);
             }
@@ -33,7 +31,6 @@ const AuthContextProvider = ({ children }) => {
   }, [reset]);
   useEffect(() => {
     if (sub) {
-      console.log("aaa");
       DataStore.query(User, (user) => user.sub.eq(sub)).then((users) =>
         setDbUser(users[0])
       );

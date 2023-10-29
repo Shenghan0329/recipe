@@ -61,7 +61,7 @@ const Add = () => {
     if (storedLink === -1) return -1;
     measure.picture = [storedLink];
     measure.step = index + "";
-    console.log(measure);
+    // console.log(measure);
     return new Measure(measure);
   };
   const store = async function (recipe) {
@@ -94,7 +94,7 @@ const Add = () => {
     result.scrapyTime = new Date().toISOString();
     // result.userID = process.env.ADMIN_USER;
     result.userID = dbUser?.id;
-    console.log(result);
+    // console.log(result);
     try {
       await DataStore.save(new Recipes(result));
       return 0;
@@ -120,9 +120,9 @@ const Add = () => {
     navigate(-1);
   };
 
-  useEffect(() => {
-    console.log(dataSize);
-  }, [dataSize]);
+  // useEffect(() => {
+  //   console.log(dataSize);
+  // }, [dataSize]);
 
   return (
     <Form

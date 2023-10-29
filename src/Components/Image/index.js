@@ -4,8 +4,8 @@ import { getUrl } from "../../Helpers/store";
 
 const Image = ({
   src = "",
-  height = 200,
   width = 200,
+  aspectRatio = "4/3",
   margins = [0, 0, 0, 0],
 }) => {
   const [img, setImg] = useState("");
@@ -21,8 +21,8 @@ const Image = ({
   }, [src]);
 
   const customStyle = {
-    height: height,
     width: width,
+    aspectRatio: aspectRatio,
     marginTop: margins[0],
     marginBottom: margins[1],
     marginLeft: margins[2],
@@ -34,7 +34,7 @@ const Image = ({
     width: width,
   };
   return (
-    <Loading width={width} height={height} data={img}>
+    <Loading width={width} aspectRatio={aspectRatio} data={img}>
       <div style={customStyle}></div>
     </Loading>
   );
