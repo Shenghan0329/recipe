@@ -1,5 +1,5 @@
 import { useParams, useRoutes } from "react-router-dom";
-import { Typography, Row, Col } from "antd";
+import { Typography, Row, Col, Divider } from "antd";
 import { useState, useEffect } from "react";
 import { DataStore } from "aws-amplify/lib-esm";
 import { Recipes, User } from "../../models";
@@ -8,13 +8,22 @@ import Image from "../../Components/Image";
 import TextList from "../../Components/List/TextList";
 import IngredientListCard from "../../Components/Card/IngredientListCard";
 import StepCard from "../../Components/Card/StepCard";
-import Loading from "../../Components/Loading";
-import recipes from "../../data/recipes.json";
+import useDeviceSize from "../../Components/Helper/screenInfo";
 
 const { Title, Text } = Typography;
 
 const styles = {
-  middle: { fontSize: "1.2rem" },
+  middle: { fontSize: "1.2rem", display: "block", width: "100%" },
+  left: {
+    width: "50%",
+    display: "inline-block",
+  },
+  right: {
+    width: "50%",
+    textAlign: "right",
+    fontWeight: 400,
+    display: "inline-block",
+  },
   container: {
     width: "100%",
     display: "flex",
@@ -31,7 +40,7 @@ const Recipe = () => {
   const [user, setUser] = useState({});
   const [scrapyTime, setScrapyTime] = useState(null);
   const [func, setFunc] = useState("");
-  const { data, setData } = useDataContext();
+  const [width, height] = useDeviceSize();
 
   useEffect(() => {
     DataStore.query(Recipes, id).then((result) => {
@@ -83,31 +92,52 @@ const Recipe = () => {
           <Text style={styles.middle}>{user?.name}</Text>
         </>
       )}
-      <Image
-        width={400}
-        height={400}
-        src={recipe?.img}
-        margins={[30, 30, 0, 0]}
-      />
-      <Text strong style={styles.middle}>
-        Benefits:{" "}
-      </Text>
-      <Text style={styles.middle}>{func ? func : "It is delicious"}</Text>
+      <Row>
+        <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+          <Image
+            width={"100%"}
+            height={400}
+            src={recipe?.img}
+            margins={[30, 30, 0, 0]}
+          />
+        </Col>
+        <Col
+          xs={24}
+          sm={24}
+          md={12}
+          lg={12}
+          xl={12}
+          style={{
+            padding: width > 1250 ? 40 : 0,
+          }}
+        >
+          <div>
+            <Title level={3} style={styles.left}>
+              Benefits
+            </Title>
+            <Text style={styles.middle}>{func ? func : "It is delicious"}</Text>
 
-      <div style={styles.container}>
-        <div style={styles.textBox}>
-          <b>Prepare Time </b>
-          {recipe?.prepareTime}
-        </div>
-        <div style={styles.textBox}>
-          <b>Cook Time </b>
-          {recipe?.cookTime}
-        </div>
-        <div style={styles.textBox}>
-          <b>Servings </b>
-          {recipe?.peopleNum}
-        </div>
-      </div>
+            <Title level={3} style={styles.left}>
+              Prepare Time:{" "}
+            </Title>
+            <Title level={3} style={styles.right}>
+              {recipe?.prepareTime}
+            </Title>
+            <Title level={3} style={styles.left}>
+              Cook Time:{" "}
+            </Title>
+            <Title level={3} style={styles.right}>
+              {recipe?.cookTime}
+            </Title>
+            <Title level={3} style={styles.left}>
+              Servings:{" "}
+            </Title>
+            <Title level={3} style={styles.right}>
+              {recipe?.peopleNum}
+            </Title>
+          </div>
+        </Col>
+      </Row>
 
       <Title level={3}>{"Ingredients"}</Title>
       <Row>
