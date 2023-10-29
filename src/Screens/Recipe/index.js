@@ -95,12 +95,7 @@ const Recipe = () => {
       )}
       <Row>
         <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-          <Image
-            width={"100%"}
-            height={400}
-            src={recipe?.img}
-            margins={[30, 30, 0, 0]}
-          />
+          <Image width={"100%"} src={recipe?.img} margins={[30, 30, 0, 0]} />
         </Col>
         <Col
           xs={24}
@@ -109,31 +104,31 @@ const Recipe = () => {
           lg={12}
           xl={12}
           style={{
-            padding: width > 992 ? 40 : 0,
+            padding: width > 992 ? 30 : 0,
           }}
         >
           <div>
-            <Title level={3} style={styles.left}>
+            <Title level={4} style={styles.left}>
               Benefits
             </Title>
             <Text style={styles.middle}>{func ? func : "It is delicious"}</Text>
 
-            <Title level={3} style={styles.left}>
+            <Title level={4} style={styles.left}>
               Prepare Time:{" "}
             </Title>
-            <Title level={3} style={styles.right}>
+            <Title level={4} style={styles.right}>
               {recipe?.prepareTime}
             </Title>
-            <Title level={3} style={styles.left}>
+            <Title level={4} style={styles.left}>
               Cook Time:{" "}
             </Title>
-            <Title level={3} style={styles.right}>
+            <Title level={4} style={styles.right}>
               {recipe?.cookTime}
             </Title>
-            <Title level={3} style={styles.left}>
+            <Title level={4} style={styles.left}>
               Servings:{" "}
             </Title>
-            <Title level={3} style={styles.right}>
+            <Title level={4} style={styles.right}>
               {recipe?.peopleNum}
             </Title>
           </div>
