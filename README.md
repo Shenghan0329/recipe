@@ -2,12 +2,11 @@
 
 Welcome to Recipes, a project born from my love for Chinese cuisine and my desire to share the rich tapestry of flavors, traditions, and culinary secrets. To fill the lack of English translations online of "real" Chinese recipes, Recipe dedicates to present authentic traditional Chinese dishes and their interaction with different food cultures. The extensive collection of recipes are all meticulously crafted to bring the flavors of China to your kitchen. 
 
-![home-page](./public/readmeImages/home-page)
+![home-page](./public/readmeImages/home-page.jpg)
 \
-![list](./public/readmeImages/list-page)
+![list](./public/readmeImages/list-page.jpg)
 \
-![recipe](./public/readmeImages/sample-recipe)
-\
+![recipe](./public/readmeImages/sample-recipe.jpg)
 
 ## Available Scripts
 
