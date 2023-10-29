@@ -38,4 +38,4 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 ## Learn More
 
-
+Some of the Chinese description of recipes couldn't be translated due to its difference from day-to-day languages. Many recipes in simplified Chinese can be found in [XiaChuFang](https://www.xiachufang.com/)\
