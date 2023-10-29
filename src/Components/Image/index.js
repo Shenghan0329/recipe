@@ -6,6 +6,7 @@ const Image = ({
   src = "",
   height = 200,
   width = 200,
+  aspectRatio = "1/1",
   margins = [0, 0, 0, 0],
 }) => {
   const [img, setImg] = useState("");
@@ -21,8 +22,8 @@ const Image = ({
   }, [src]);
 
   const customStyle = {
-    height: height,
     width: width,
+    aspectRatio: aspectRatio,
     marginTop: margins[0],
     marginBottom: margins[1],
     marginLeft: margins[2],

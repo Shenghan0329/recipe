@@ -9,6 +9,7 @@ import TextList from "../../Components/List/TextList";
 import IngredientListCard from "../../Components/Card/IngredientListCard";
 import StepCard from "../../Components/Card/StepCard";
 import useDeviceSize from "../../Components/Helper/screenInfo";
+import "./index.css";
 
 const { Title, Text } = Typography;
 
@@ -93,7 +94,7 @@ const Recipe = () => {
         </>
       )}
       <Row>
-        <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+        <Col xs={24} sm={24} md={24} lg={12} xl={12}>
           <Image
             width={"100%"}
             height={400}
@@ -104,11 +105,11 @@ const Recipe = () => {
         <Col
           xs={24}
           sm={24}
-          md={12}
+          md={24}
           lg={12}
           xl={12}
           style={{
-            padding: width > 1250 ? 40 : 0,
+            padding: width > 992 ? 40 : 0,
           }}
         >
           <div>

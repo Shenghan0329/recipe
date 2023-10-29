@@ -1,6 +1,7 @@
 import { Card } from "antd";
 import { useNavigate } from "react-router-dom";
 import Image from "../../Image";
+import "./style.css";
 
 const GalleryCard = (item) => {
   // const navigate = useNavigate();
@@ -13,9 +14,8 @@ const GalleryCard = (item) => {
       hoverable
       style={{
         width: "100%",
-        height: "300px",
       }}
-      cover={<Image width="100%" height="300px" src={item?.img} />}
+      cover={<Image width="100%" aspectRatio="8/3" src={item?.img} />}
       // onClick={onClick}
     ></Card>
   );

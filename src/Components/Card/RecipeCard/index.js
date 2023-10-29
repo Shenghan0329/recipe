@@ -15,9 +15,9 @@ const RecipeCard = (item) => {
       hoverable
       style={{
         width: "100%",
-        aspectRatio: 4 / 3,
+        aspectRatio: 1 / 1,
       }}
-      cover={<Image width="100%" src={item?.img} />}
+      cover={<Image width="100%" aspectRatio="4/3" src={item?.img} />}
       //   onClick={onClick}
     >
       <Meta title={item.meauID + " " + item.name} taste={item.taste} />

@@ -28,7 +28,7 @@ const App = () => {
             <Content
               style={{
                 padding: "0 50px",
-                width: width > 1250 ? "70%" : "100%",
+                width: width > 1200 ? "70%" : "100%",
               }}
             >
               <Router />

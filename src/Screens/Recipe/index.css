@@ -1,0 +1,10 @@
+.ant-typography{
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+.ant-list-item-meta-title, .ant-list-item-meta-description{
+    font-size: 1rem !important;
+}
+.ant-list-header span{
+    font-size: 1.2rem !important;
+}
