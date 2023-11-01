@@ -1,7 +1,6 @@
 ## Introduction
 
-Welcome to Recipes, a project born from my love for Chinese cuisine and my desire to share the rich tapestry of flavors, traditions, and culinary secrets. To fill the lack of English translations online of "real" Chinese recipes, Recipe dedicates to present authentic traditional Chinese dishes and their interaction with different food cultures. The extensive collection of recipes are all meticulously crafted to bring the flavors of China to your kitchen. 
-
+Welcome to Recipes, a project born from my love for Chinese cuisine. It includes a rich tapestry of flavors, traditions, and culinary secrets. To fill the lack of English translations online of "real" Chinese recipes, Recipe dedicates to present authentic traditional Chinese dishes and their interaction with different food cultures. The extensive collection of recipes are all meticulously crafted. Hope you like them!\
 ![home-page](./public/readmeImages/home-page.jpg)
 \
 ![list](./public/readmeImages/list-page.jpg)
@@ -38,4 +37,4 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 ## Learn More
 
-Some of the Chinese description of recipes couldn't be translated due to its difference from day-to-day languages. Many recipes in simplified Chinese can be found in [XiaChuFang](https://www.xiachufang.com/)\
+Some of the Chinese description of recipes couldn't be translated due to its difference from day-to-day languages. Many recipes in simplified Chinese can be found in [XiaChuFang](https://www.xiachufang.com/)

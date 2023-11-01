@@ -1,8 +1,10 @@
 import { createContext, useEffect } from "react";
 import { useState } from "react";
 import { DataStore } from "aws-amplify";
+import { useDispatch, useSelector } from "react-redux";
 import { Recipes } from "../models";
 import { useContext } from "react";
+import { addData, ADD_DATA } from "../add_data";
 import { useAuthContext } from "./AuthContext";
 
 const DataContext = createContext({});
@@ -15,10 +17,20 @@ const DataContextProvider = ({ children }) => {
   const [customData, setCustomData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [userData, setUserData] = useState([]);
-
+  const dispatch = useDispatch();
   const { dbUser } = useAuthContext();
+  const result = useSelector((state) => state.data);
   useEffect(() => {
+    // Store the data locally to prevent lack of data when refreshing
+    console.warn("Local Data: ", result);
+    setData(result.data);
+    setCustomData(result.data);
+    setFilterData(result.data);
+    setEasyData(result.easyData);
+    setSingleData(result.singleData);
+    setBakeData(result.bakeData);
     if (data.length === 0) {
+      console.log("aaa");
       DataStore.query(Recipes).then((totalData) => {
         setData(totalData);
         setCustomData(totalData);
@@ -49,8 +61,25 @@ const DataContextProvider = ({ children }) => {
     }
   }, []);
   useEffect(() => {
-    console.log(data);
+    if (data?.length > 0) {
+      dispatch(addData({ data: data }));
+    }
   }, [data]);
+  useEffect(() => {
+    if (easyData?.length > 0) {
+      dispatch(addData({ easyData: easyData }));
+    }
+  }, [easyData]);
+  useEffect(() => {
+    if (easyData?.length > 0) {
+      dispatch(addData({ singleData: singleData }));
+    }
+  }, [singleData]);
+  useEffect(() => {
+    if (bakeData?.length > 0) {
+      dispatch(addData({ bakeData: bakeData }));
+    }
+  }, [bakeData]);
   useEffect(() => {
     if (dbUser?.id) {
       DataStore.query(Recipes, (recipe) => recipe.userID.eq(dbUser?.id)).then(
