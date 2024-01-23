@@ -1,11 +1,7 @@
-import { Breadcrumb, Layout, Menu, theme } from "antd";
 import { Typography } from "antd";
-import { DataStore } from "aws-amplify/lib-esm";
-import { Recipes } from "../../models";
 import Gallery from "../../Components/Gallery";
 import RecipeList from "../../Components/List/RecipeList";
 import { useDataContext } from "../../Contexts/DataContext";
-import { useState, useEffect } from "react";
 const { Title } = Typography;
 
 const Home = () => {

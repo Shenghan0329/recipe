@@ -6,7 +6,7 @@
     "defaultAuthType": {
       "mode": "API_KEY",
       "keyDescription": "api key description",
-      "expirationTime": 30
+      "expirationTime": 365
     },
     "additionalAuthTypes": [
       {
@@ -16,7 +16,21 @@
     "conflictResolution": {
       "defaultResolutionStrategy": {
         "type": "AUTOMERGE"
-      }
+      },
+      "perModelResolutionStrategy": [
+        {
+          "resolutionStrategy": {
+            "type": "AUTOMERGE"
+          },
+          "entityName": "User"
+        },
+        {
+          "resolutionStrategy": {
+            "type": "AUTOMERGE"
+          },
+          "entityName": "Recipes"
+        }
+      ]
     }
   }
 }

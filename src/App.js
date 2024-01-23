@@ -5,10 +5,10 @@ import { useState } from "react";
 import { Amplify } from "aws-amplify";
 import config from "./aws-exports";
 import Head from "./Layout/Head";
-import Home from "./Screens/Home";
+// import Home from "./Screens/Home";
 import Foot from "./Layout/Foot";
 import DataContextProvider from "./Contexts/DataContext";
-import updateAll from "./data/updateImage";
+// import updateAll from "./data/updateImage";
 import AuthContextProvider from "./Contexts/AuthContext";
 import useDeviceSize from "./Components/Helper/screenInfo";
 
