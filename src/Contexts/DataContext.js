@@ -30,7 +30,6 @@ const DataContextProvider = ({ children }) => {
     setSingleData(result.singleData);
     setBakeData(result.bakeData);
     if (data.length === 0) {
-      console.log("aaa");
       DataStore.query(Recipes).then((totalData) => {
         setData(totalData);
         setCustomData(totalData);
