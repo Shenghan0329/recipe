@@ -25,34 +25,56 @@ const DataContextProvider = ({ children }) => {
  const result = useSelector((state) => state.data);
 
 
- async function getData(){
-   if (!data || data.length === 0) {
-     const totalData = await DataStore.query(Recipes);
-       setData(totalData);
-       setDataSize(totalData.length);
-       // console.log("Fetched "+totalData.length+" recipes");
-   }
-   if (!easyData || easyData.length === 0) {
-     DataStore.query(Recipes, (recipe) =>
-       recipe.level.contains("Novice")
-     ).then((found) => {
-       setEasyData(found);
-     });
-   }
-   if (!singleData || singleData.length === 0) {
-     DataStore.query(Recipes, (recipe) => recipe.peopleNum.eq(1)).then(
-       (found) => {
-         setSingleData(found);
-       }
-     );
-   }
-   if (!bakeData || bakeData.length === 0) {
-     DataStore.query(Recipes, (recipe) => recipe.method.eq("BAKE")).then(
-       (found) => {
-         setBakeData(found);
-       }
-     );
-   }
+ async function getData(d){
+  switch (d) {
+    case "data":
+      if (!data || data.length === 0) {
+        const totalData = await DataStore.query(Recipes);
+        setData(totalData);
+        setDataSize(totalData.length);
+        console.log("Fetched "+totalData.length+" recipes");
+      }
+      break;
+    case "easyData":
+      if (!easyData || easyData.length === 0) {
+        DataStore.query(Recipes, (recipe) =>
+          recipe.level.contains("Novice")
+        ).then((found) => {
+          setEasyData(found);
+        });
+      }
+      break;
+    case "singleData":
+      if (!singleData || singleData.length === 0) {
+        DataStore.query(Recipes, (recipe) => recipe.peopleNum.eq(1)).then(
+          (found) => {
+            setSingleData(found);
+          }
+        );
+      }
+      break;
+    case "bakeData":
+      if (!bakeData || bakeData.length === 0) {
+        DataStore.query(Recipes, (recipe) => recipe.method.eq("BAKE")).then(
+          (found) => {
+            setBakeData(found);
+          }
+        );
+      }
+      break;
+    default:
+      break;
+  } 
+ }
+ function store(key,keyObj,setKey){
+  dispatch(addData({ key }));
+  if (keyObj?.length > 0 && result[key]?.length <= keyObj.length) {
+    // console.log("Stored local");
+  }
+  else{
+    if(result[key]?.length > keyObj.length) setKey(result[key]);
+    else getData(key);
+  }
  }
  useEffect(() => {
    // Store the data locally to prevent lack of data when refreshing
@@ -65,33 +87,23 @@ const DataContextProvider = ({ children }) => {
      setSingleData(result.singleData);
      setBakeData(result.bakeData);
    }else{
-     getData();
+     getData("data");
+     getData("easyData");
+     getData("singleData");
+     getData("bakeData");
    }
  }, []);
  useEffect(() => {
-   dispatch(addData({ data: data }));
-   if (data?.length > 0 && result.data?.length <= data.length) {
-     console.log("Stored local");
-   }
-   else{
-     if(result.data?.length > data.length) setData(result.data);
-     else getData();
-   }
+  store("data",data,setData);
  }, [data]);
  useEffect(() => {
-   if (easyData?.length > 0) {
-     dispatch(addData({ easyData: easyData }));
-   }
+   store("easyData",easyData,setEasyData);
  }, [easyData]);
  useEffect(() => {
-   if (easyData?.length > 0) {
-     dispatch(addData({ singleData: singleData }));
-   }
+   store("singleData",singleData,setSingleData);
  }, [singleData]);
  useEffect(() => {
-   if (bakeData?.length > 0) {
-     dispatch(addData({ bakeData: bakeData }));
-   }
+   store("bakeData",bakeData,setBakeData);
  }, [bakeData]);
  useEffect(() => {
    if (dbUser?.id) {
