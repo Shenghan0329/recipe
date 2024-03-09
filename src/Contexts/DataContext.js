@@ -67,7 +67,9 @@ const DataContextProvider = ({ children }) => {
   } 
  }
  function store(key,keyObj,setKey){
-  dispatch(addData({ key }));
+  let obj = {};
+  obj[key] = keyObj;
+  dispatch(addData(obj));
   if (keyObj?.length > 0 && result[key]?.length <= keyObj.length) {
     // console.log("Stored local");
   }
