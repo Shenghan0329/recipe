@@ -51,7 +51,7 @@ type EagerUser = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly name: string;
+  readonly name?: string | null;
   readonly image?: string | null;
   readonly introduce?: string | null;
   readonly Recipes?: (Recipes | null)[] | null;
@@ -66,7 +66,7 @@ type LazyUser = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly name: string;
+  readonly name?: string | null;
   readonly image?: string | null;
   readonly introduce?: string | null;
   readonly Recipes: AsyncCollection<Recipes>;
