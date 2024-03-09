@@ -7,9 +7,8 @@
 /* eslint-disable */
 import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
-import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { User } from "../models";
-import { fetchByPath, validateField } from "./utils";
+import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
 export default function UserUpdateForm(props) {
   const {
@@ -56,10 +55,10 @@ export default function UserUpdateForm(props) {
   }, [idProp, userModelProp]);
   React.useEffect(resetStateValues, [userRecord]);
   const validations = {
-    name: [{ type: "Required" }],
+    name: [],
     image: [],
     introduce: [],
-    sub: [{ type: "Required" }],
+    sub: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -116,8 +115,8 @@ export default function UserUpdateForm(props) {
         }
         try {
           Object.entries(modelFields).forEach(([key, value]) => {
-            if (typeof value === "string" && value.trim() === "") {
-              modelFields[key] = undefined;
+            if (typeof value === "string" && value === "") {
+              modelFields[key] = null;
             }
           });
           await DataStore.save(
@@ -139,7 +138,7 @@ export default function UserUpdateForm(props) {
     >
       <TextField
         label="Name"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         value={name}
         onChange={(e) => {
@@ -220,7 +219,7 @@ export default function UserUpdateForm(props) {
       ></TextField>
       <TextField
         label="Sub"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         value={sub}
         onChange={(e) => {
