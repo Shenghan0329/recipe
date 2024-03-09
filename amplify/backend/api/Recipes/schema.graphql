@@ -1,10 +1,10 @@
 type User @model @auth(rules: [{allow: public}]) {
   id: ID!
-  name: String!
+  name: String
   image: String
   introduce: String
   Recipes: [Recipes] @hasMany(indexName: "byUser", fields: ["id"])
-  sub: String!
+  sub: String
 }
 
 enum Method {

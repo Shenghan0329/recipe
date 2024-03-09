@@ -2,6 +2,7 @@ import { DataStore } from "@aws-amplify/datastore";
 import { User, Recipes, Method, Measure, Ingredient } from "../models";
 import recipes from "./food_meau.json";
 import { GoogleTranslator } from "@translate-tools/core/translators/GoogleTranslator";
+import { writeFile } from 'fs-web';
 
 const recipeList = recipes.RECORDS;
 const recipe = recipeList[3445];
@@ -132,4 +133,13 @@ export default async function setDefaultUser() {
   });
 }
 
-export { convertOne, cToE, convertDB };
+const fetch = (arr) => {
+  let d = JSON.stringify(arr);
+  const file = new Blob([d], { type: 'text/plain' });
+  console.log(d);
+  writeFile('data.json', file).then(()=>{
+    console.log("written success");
+  })
+}
+
+export { convertOne, cToE, convertDB, fetch };
