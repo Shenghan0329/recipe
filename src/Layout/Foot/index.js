@@ -8,7 +8,7 @@ const Foot = () => {
         textAlign: "center",
       }}
     >
-      Ant Design ?2023 Created by Ant UED
+      Shenghan Cheng: 2023 Created by Shenghan Cheng
     </Footer>
   );
 };
