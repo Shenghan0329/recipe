@@ -42,13 +42,22 @@ const Recipe = () => {
   const [scrapyTime, setScrapyTime] = useState(null);
   const [func, setFunc] = useState("");
   const [width, height] = useDeviceSize();
+  const {data} = useDataContext();
 
-  useEffect(() => {
-    DataStore.query(Recipes, id).then((result) => {
-      console.log(result);
+  async function queryRecipe(id){
+    await DataStore.query(Recipes, id).then((result) => {
+      let curr = {};
       setRecipe(result);
     });
+  }
+  useEffect(() => {
+    queryRecipe(id);
   }, []);
+  useEffect(()=>{
+    if(!recipe || !Object.values(recipe)?.length){
+      queryRecipe(id);
+    }
+  },[recipe,data])
   useEffect(() => {
     const tags = recipe?.tags;
     // console.log(tags);

@@ -30,9 +30,9 @@ const DataContextProvider = ({ children }) => {
     case "data":
       if (!data || data.length === 0) {
         const totalData = await DataStore.query(Recipes);
+        if(totalData.length) console.log("Fetched "+totalData.length+" recipes");
         setData(totalData);
         setDataSize(totalData.length);
-        console.log("Fetched "+totalData.length+" recipes");
       }
       break;
     case "easyData":
@@ -71,7 +71,7 @@ const DataContextProvider = ({ children }) => {
   obj[key] = keyObj;
   dispatch(addData(obj));
   if (keyObj?.length > 0 && result[key]?.length <= keyObj.length) {
-    // console.log("Stored local");
+    // console.log("Fetched local");
   }
   else{
     if(result[key]?.length > keyObj.length) setKey(result[key]);
