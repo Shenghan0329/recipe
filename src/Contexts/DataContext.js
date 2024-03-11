@@ -60,7 +60,7 @@ async function getData(d){
      DataStore.query(Recipes, (recipe) => recipe.userID.eq(dbUser?.id)).then(
        (found) => {
          setUserData(found);
-         console.log(found);
+         // console.log(found);
        }
      );
    }
