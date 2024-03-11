@@ -1,10 +1,8 @@
 import { createContext, useEffect } from "react";
 import { useState } from "react";
 import { DataStore } from "aws-amplify";
-import { useDispatch, useSelector } from "react-redux";
 import { Recipes,User } from "../models";
 import { useContext } from "react";
-import { addData, ADD_DATA } from "../add_data";
 import { useAuthContext } from "./AuthContext";
 
 
@@ -20,93 +18,43 @@ const DataContextProvider = ({ children }) => {
  const [customData, setCustomData] = useState([]);
  const [filterData, setFilterData] = useState([]);
  const [userData, setUserData] = useState([]);
- const dispatch = useDispatch();
  const { dbUser } = useAuthContext();
- const result = useSelector((state) => state.data);
 
 
- async function getData(d){
-  switch (d) {
-    case "data":
-      if (!data || data.length === 0) {
-        const totalData = await DataStore.query(Recipes);
-        if(totalData.length) console.log("Fetched "+totalData.length+" recipes");
-        setData(totalData);
-        setDataSize(totalData.length);
-      }
-      break;
-    case "easyData":
-      if (!easyData || easyData.length === 0) {
-        DataStore.query(Recipes, (recipe) =>
-          recipe.level.contains("Novice")
-        ).then((found) => {
-          setEasyData(found);
-        });
-      }
-      break;
-    case "singleData":
-      if (!singleData || singleData.length === 0) {
-        DataStore.query(Recipes, (recipe) => recipe.peopleNum.eq(1)).then(
-          (found) => {
-            setSingleData(found);
-          }
-        );
-      }
-      break;
-    case "bakeData":
-      if (!bakeData || bakeData.length === 0) {
-        DataStore.query(Recipes, (recipe) => recipe.method.eq("BAKE")).then(
-          (found) => {
-            setBakeData(found);
-          }
-        );
-      }
-      break;
-    default:
-      break;
-  } 
- }
- function store(key,keyObj,setKey){
-  let obj = {};
-  obj[key] = keyObj;
-  dispatch(addData(obj));
-  if (keyObj?.length > 0 && result[key]?.length <= keyObj.length) {
-    // console.log("Fetched local");
-  }
-  else{
-    if(result[key]?.length > keyObj.length) setKey(result[key]);
-    else getData(key);
-  }
+async function getData(d){
+  DataStore.observeQuery(
+    Recipes
+  ).subscribe(snapshot => {
+    const { items, isSynced } = snapshot;
+    console.log(`Recipes count: ${items.length}, isSynced: ${isSynced}`);
+    setData(items);
+  });
+  DataStore.observeQuery(
+    Recipes,
+    (recipe) => recipe.level.contains("Novice")
+  ).subscribe(snapshot => {
+    const { items, isSynced } = snapshot;
+    setEasyData(items);
+  });
+  DataStore.observeQuery(
+    Recipes,
+    (recipe) => recipe.peopleNum.eq(1)
+  ).subscribe(snapshot => {
+    const { items, isSynced } = snapshot;
+    setSingleData(items);
+  });
+  DataStore.observeQuery(
+    Recipes,
+    (recipe) => recipe.method.eq("BAKE")
+  ).subscribe(snapshot => {
+    const { items, isSynced } = snapshot;
+    setBakeData(items);
+  });
+  
  }
  useEffect(() => {
-   // Store the data locally to prevent lack of data when refreshing
-   console.warn("Local Data: ", result);
-   if((result.data && result.data.length >= 3664)){
-     setData(result.data);
-     setCustomData(result.data);
-     setFilterData(result.data);
-     setEasyData(result.easyData);
-     setSingleData(result.singleData);
-     setBakeData(result.bakeData);
-   }else{
-     getData("data");
-     getData("easyData");
-     getData("singleData");
-     getData("bakeData");
-   }
+    getData();
  }, []);
- useEffect(() => {
-  store("data",data,setData);
- }, [data]);
- useEffect(() => {
-   store("easyData",easyData,setEasyData);
- }, [easyData]);
- useEffect(() => {
-   store("singleData",singleData,setSingleData);
- }, [singleData]);
- useEffect(() => {
-   store("bakeData",bakeData,setBakeData);
- }, [bakeData]);
  useEffect(() => {
    if (dbUser?.id) {
      DataStore.query(Recipes, (recipe) => recipe.userID.eq(dbUser?.id)).then(

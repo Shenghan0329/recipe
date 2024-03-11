@@ -45,19 +45,17 @@ const Recipe = () => {
   const {data} = useDataContext();
 
   async function queryRecipe(id){
-    await DataStore.query(Recipes, id).then((result) => {
-      let curr = {};
-      setRecipe(result);
+    DataStore.observeQuery(
+      Recipes,
+      (recipe) => recipe.id.eq(id)
+    ).subscribe(snapshot => {
+      const { items, isSynced } = snapshot;
+      setRecipe(items[0]);
     });
   }
   useEffect(() => {
     queryRecipe(id);
   }, []);
-  useEffect(()=>{
-    if(!recipe || !Object.values(recipe)?.length){
-      queryRecipe(id);
-    }
-  },[recipe,data])
   useEffect(() => {
     const tags = recipe?.tags;
     // console.log(tags);
