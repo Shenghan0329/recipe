@@ -1,9 +1,7 @@
 import { lazy, Suspense } from "react";
-import { Route, Routes } from "react-router-dom";
 import Home from "../Screens/Home";
 import Error from "../Screens/Error";
 import { Route, Routes } from "react-router-dom";
-import { lazy, Suspense } from "react";
 
 const List = lazy(() => import("../Screens/List"));
 const Add = lazy(() => import("../Screens/Add"));
