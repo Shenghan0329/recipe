@@ -21,7 +21,7 @@ const DataContextProvider = ({ children }) => {
  const { dbUser } = useAuthContext();
 
 
-async function getData(d){
+function getData(d){
   DataStore.observeQuery(
     Recipes
   ).subscribe(snapshot => {
