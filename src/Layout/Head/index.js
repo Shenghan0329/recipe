@@ -1,5 +1,4 @@
 import { Layout, Menu } from "antd";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { SettingOutlined } from "@ant-design/icons";
 import "./head.css";

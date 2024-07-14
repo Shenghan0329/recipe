@@ -105,13 +105,13 @@ const Add = () => {
   };
   const onFinish = async (values) => {
     console.log(values);
-    try {
-      store(values);
-      setSuccess(true);
-    } catch (e) {
-      console.log("OnFinish Error: " + e);
-      setSuccess(false);
-    }
+    // try {
+    //   store(values);
+    //   setSuccess(true);
+    // } catch (e) {
+    //   console.log("OnFinish Error: " + e);
+    //   setSuccess(false);
+    // }
   };
   const onReset = () => {
     formRef.current?.resetFields();

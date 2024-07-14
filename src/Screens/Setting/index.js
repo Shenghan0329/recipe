@@ -2,7 +2,7 @@ import { Typography, LayoutProps, Layout, Button } from "antd";
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Auth } from "aws-amplify";
+import { Auth } from "@aws-amplify/auth";
 import { useAuthContext } from "../../Contexts/AuthContext";
 import { useDataContext } from "../../Contexts/DataContext";
 import React from "react";

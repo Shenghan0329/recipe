@@ -1,6 +1,7 @@
 import { Button, Checkbox, Form, Input } from "antd";
 import React, { useEffect, useState, useRef } from "react";
-import { Auth, DataStore } from "aws-amplify";
+import { Auth } from "@aws-amplify/auth";
+import { DataStore } from "@aws-amplify/datastore";
 import { User } from "../../models";
 import { useAuthContext } from "../../Contexts/AuthContext";
 import { useNavigate } from "react-router-dom";

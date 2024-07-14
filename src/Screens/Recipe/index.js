@@ -1,7 +1,7 @@
 import { useParams, useRoutes } from "react-router-dom";
 import { Typography, Row, Col, Divider } from "antd";
 import { useState, useEffect } from "react";
-import { DataStore } from "aws-amplify/lib-esm";
+import { DataStore } from "@aws-amplify/datastore";
 import { Recipes, User } from "../../models";
 import { useDataContext } from "../../Contexts/DataContext";
 import Image from "../../Components/Image";

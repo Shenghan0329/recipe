@@ -1,13 +1,12 @@
 import { createContext, useEffect } from "react";
 import { useState } from "react";
-import { DataStore } from "aws-amplify";
+import { DataStore } from "@aws-amplify/datastore";
 import { Recipes,User } from "../models";
 import { useContext } from "react";
 import { useAuthContext } from "./AuthContext";
-
+import { getFileFromUrl } from "../Helpers/store";
 
 const DataContext = createContext({});
-
 
 const DataContextProvider = ({ children }) => {
  const [data, setData] = useState([]);
@@ -28,6 +27,9 @@ function getData(d){
     const { items, isSynced } = snapshot;
     console.log(`Recipes count: ${items.length}, isSynced: ${isSynced}`);
     setData(items);
+    // if(items.length>0) {
+    //   let f = getFileFromUrl(items[0]?.img);
+    // }
   });
   DataStore.observeQuery(
     Recipes,

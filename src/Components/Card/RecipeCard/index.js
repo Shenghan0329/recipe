@@ -1,5 +1,4 @@
 import { Card } from "antd";
-import { useNavigate } from "react-router-dom";
 import Image from "../../Image";
 import "./style.css";
 const { Meta } = Card;

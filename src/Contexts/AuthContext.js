@@ -1,6 +1,7 @@
 import { createContext, useEffect } from "react";
 import { useState } from "react";
-import { Auth, DataStore } from "aws-amplify";
+import { Auth } from "@aws-amplify/auth";
+import { DataStore } from "@aws-amplify/datastore";
 import { User } from "../models";
 import { useContext } from "react";
 
