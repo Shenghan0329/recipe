@@ -1,14 +1,11 @@
 import Router from "./Router";
 import { Layout } from "antd";
 import { BrowserRouter } from "react-router-dom";
-import { useState } from "react";
 import { Amplify } from "aws-amplify";
 import config from "./aws-exports";
 import Head from "./Layout/Head";
-import Home from "./Screens/Home";
 import Foot from "./Layout/Foot";
 import DataContextProvider from "./Contexts/DataContext";
-import updateAll from "./data/updateImage";
 import AuthContextProvider from "./Contexts/AuthContext";
 import useDeviceSize from "./Components/Helper/screenInfo";
 
