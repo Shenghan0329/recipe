@@ -1,7 +1,4 @@
-import { Breadcrumb, Layout, Menu, theme } from "antd";
 import { Typography } from "antd";
-import { DataStore } from "aws-amplify/lib-esm";
-import { Recipes } from "../../models";
 import Gallery from "../../Components/Gallery";
 import RecipeList from "../../Components/List/RecipeList";
 import { useDataContext } from "../../Contexts/DataContext";
@@ -12,17 +9,9 @@ const { Title } = Typography;
 const Home = () => {
   const {
     data,
-    setData,
     easyData,
-    setEasyData,
-    customData,
-    setCustomData,
-    filterData,
-    setFilterData,
     singleData,
-    setSingleData,
     bakeData,
-    setBakeData,
   } = useDataContext();
   const [flag,setFlag] = useState(false);
   useEffect(()=>{
@@ -63,7 +52,7 @@ const Home = () => {
     <>
       <button onClick={f}>Start Scraping Images</button>
       <Title level={2}>Today's Favourites</Title>
-      <Gallery data={data} />
+      <Gallery data={data.slice(0,8)} />
       <Title level={2}>Beginners Friendly</Title>
       <RecipeList data={easyData} pageSize={6} />
       <Title level={2}>Enjoy Alone</Title>
