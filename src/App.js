@@ -1,7 +1,7 @@
 import Router from "./Router";
 import { Layout } from "antd";
 import { BrowserRouter } from "react-router-dom";
-import { Amplify,DataStore } from "aws-amplify";
+import { Amplify,DataStore,Hub } from "aws-amplify";
 import config from "./aws-exports";
 import Head from "./Layout/Head";
 import Foot from "./Layout/Foot";
@@ -10,7 +10,7 @@ import AuthContextProvider from "./Contexts/AuthContext";
 import useDeviceSize from "./Components/Helper/screenInfo";
 
 Amplify.configure(config);
-DataStore.configure({syncPageSize:60})
+DataStore.configure({syncPageSize:60,maxRecordsToSync:60});
 
 // updateAll();
 const { Content } = Layout;

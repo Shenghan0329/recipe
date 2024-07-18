@@ -32,9 +32,10 @@ const AuthContextProvider = ({ children }) => {
   }, [reset]);
   useEffect(() => {
     if (sub) {
-      DataStore.query(User, (user) => user.sub.eq(sub)).then((users) =>
-        setDbUser(users[0])
-      );
+      DataStore.query(User, (user) => user.sub.eq(sub)).then((users) => {
+        setDbUser(users[0]);
+        console.log(users);
+      });
     }
   }, [sub]);
 

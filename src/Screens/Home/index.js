@@ -15,7 +15,6 @@ const Home = () => {
   } = useDataContext();
   const [flag,setFlag] = useState(false);
   useEffect(()=>{
-    console.log(data);
     if(data.length>0 && flag==true) {
       // let f = getFileFromUrl(data[2]?.img);
       // for(let i = 0; i<data.length; i++){
@@ -53,14 +52,14 @@ const Home = () => {
       <button onClick={f}>Start Scraping Images</button>
       <Title level={2}>Today's Favourites</Title>
       <Gallery data={data.slice(0,8)} />
-      <Title level={2}>Beginners Friendly</Title>
-      <RecipeList data={easyData} pageSize={6} />
-      <Title level={2}>Enjoy Alone</Title>
-      <RecipeList data={singleData} pageSize={6} />
-      <Title level={2}>Baking</Title>
-      <RecipeList data={bakeData} pageSize={6} />
       <Title level={2}>All Recipes</Title>
       <RecipeList data={data} pageSize={6} />
+      <Title level={2}>Beginners Friendly</Title>
+      <RecipeList data={easyData.length>0?easyData:data} pageSize={6} />
+      <Title level={2}>Enjoy Alone</Title>
+      <RecipeList data={singleData.length>0?singleData:data} pageSize={6} />
+      <Title level={2}>Baking</Title>
+      <RecipeList data={bakeData.length>0?bakeData:data} pageSize={6} />
     </>
   );
 };

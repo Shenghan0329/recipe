@@ -85,6 +85,7 @@ const Recipe = () => {
   }, [recipe]);
   useEffect(() => {
     DataStore.query(User, (item) => item.id.eq(userID)).then((results) => {
+      console.log(results);
       setUser(results[0]);
     });
   }, [userID]);
