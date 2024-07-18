@@ -5,6 +5,7 @@ import { Recipes,User } from "../models";
 import { useContext } from "react";
 import { API } from 'aws-amplify';
 import { useAuthContext } from "./AuthContext";
+import * as queries from "../GraphQL/queries";
 import { getFileFromUrl } from "../Helpers/store";
 
 const DataContext = createContext({});
@@ -80,20 +81,20 @@ function getData(d){
   
  }
  useEffect(() => {
-  DataStore.observeQuery(
-    Recipes
-  ).subscribe(snapshot => {
-    const { items, isSynced } = snapshot;
-    // console.log(`Recipes count: ${items.length}, isSynced: ${isSynced}`);
-    if(items.length>0){
-      setData(items);
-    }
-  });
-  // API.graphql({
-  //   query: listRecipes
-  // }).then((data)=>{
-  //   console.log(data);
+  // DataStore.observeQuery(
+  //   Recipes
+  // ).subscribe(snapshot => {
+  //   const { items, isSynced } = snapshot;
+  //   // console.log(`Recipes count: ${items.length}, isSynced: ${isSynced}`);
+  //   if(items.length>0){
+  //     setData(items);
+  //   }
   // });
+  API.graphql({
+    query: queries.data(100)
+  }).then((data)=>{
+    console.log(data);
+  });
   getData();
  }, []);
  useEffect(() => {

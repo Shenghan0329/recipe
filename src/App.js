@@ -10,7 +10,7 @@ import AuthContextProvider from "./Contexts/AuthContext";
 import useDeviceSize from "./Components/Helper/screenInfo";
 
 Amplify.configure(config);
-DataStore.configure({syncPageSize:60,maxRecordsToSync:60});
+DataStore.configure({syncPageSize:60,maxRecordsToSync:10000});
 
 // updateAll();
 const { Content } = Layout;
