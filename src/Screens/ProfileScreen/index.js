@@ -58,6 +58,7 @@ const Profile = ({ afterSubmit = () => {} }) => {
     } else {
       res = await createUser(values);
     }
+    console.log(res);
     console.log(res == 0 ? "Save success" : "Save failed");
   };
   const signOut = () => {
