@@ -13,4 +13,22 @@ const filter = function (data, filters) {
   return filteredData;
 };
 
+// function queryAll(next=null,da){
+//   let ops = {limit:360};
+//   if(next === "finish") return;
+//   if(next!=null) ops.nextToken=next;
+//   API.graphql({
+//     query: queries.data(ops,[])
+//   }).then((res)=>{
+//     let d = res.data;
+//     if(d!=null) {
+//       da=[...da,...d.listRecipes.items]
+//       setData([...da]);
+//     }
+//     let token = d?.listRecipes.nextToken;
+//     if(token!=null) queryAll(token);
+//     return;
+//   });
+// }
+
 export default filter;

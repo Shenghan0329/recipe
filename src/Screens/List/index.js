@@ -1,5 +1,5 @@
 import { Typography, Dropdown, Button, Space } from "antd";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDataContext } from "../../Contexts/DataContext";
 import RecipeList from "../../Components/List/RecipeList";
 import { all } from "axios";
@@ -7,10 +7,12 @@ import { all } from "axios";
 const { Title } = Typography;
 
 const List = () => {
-  const { data, easyData, singleData, bakeData } = useDataContext();
+  const { data, easyData, singleData, bakeData, fullLoad, setFullLoad } = useDataContext();
   const dataTypeList = [data, easyData, singleData, bakeData];
+  const dataTypeNameList = ["data", "easyData", "singleData", "bakeData"];
   const dataNameList = ["All", "Easy", "For one person", "Baked"];
   const [d, setD] = useState(0);
+
   const items = dataTypeList.map((ele, index) => {
     return {
       key: dataNameList[index] + "-" + index,
@@ -27,6 +29,12 @@ const List = () => {
       ),
     };
   });
+
+  useEffect(()=>{
+    let obj = {...fullLoad};
+    obj[dataTypeNameList[d]] = true;
+    setFullLoad(obj);
+  },[d])
 
   return (
     <>

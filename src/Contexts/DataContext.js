@@ -20,6 +20,21 @@ const DataContextProvider = ({ children }) => {
  const [customData, setCustomData] = useState([]);
  const [filterData, setFilterData] = useState([]);
  const [userData, setUserData] = useState([]);
+ const [fullLoad, setFullLoad] = useState({
+  data:false,
+  easyData:false,
+  singleData:false,
+  bakeData:false
+ });
+ const datas = {
+  data, easyData, singleData, bakeData
+ }
+ const setters = {
+  data:setData, 
+  easyData:setEasyData, 
+  singleData:setSingleData, 
+  bakeData:setBakeData
+ }
  const { dbUser } = useAuthContext();
 
 //  const listen = Hub.listen("datastore", async hubData => {
@@ -31,72 +46,23 @@ const DataContextProvider = ({ children }) => {
 // })
 
 function getData(d){
-  // DataStore.query(Recipes,Predicates.ALL,{
-  //       page: 0,
-  //       limit: 6
-  //     }).then((items)=>{
-  //   setData(items);
-  //   console.log("Fetched "+items.length+" recipes");
-  // }).catch((e)=>{console.log(e)});
-
-  // DataStore.query(Recipes,recipe=>recipe.level.contains("Novice"),{
-  //   page:0, 
-  //   limit:60
-  // }).then((items)=>{
-  //   setEasyData(items);
-  // }).catch((e)=>{console.log(e)});
-  // DataStore.query(Recipes,(recipe) => recipe.peopleNum.eq(1),{
-  //   page:0, 
-  //   limit:60
-  // }).then((items)=>{
-  //   setSingleData(items);
-  // }).catch((e)=>{console.log(e)});
-  // DataStore.query(Recipes,(recipe) => recipe.method.eq("BAKE"),{
-  //   page:0, 
-  //   limit:60
-  // }).then((items)=>{
-  //   setBakeData(items);
-  // }).catch((e)=>{console.log(e)});
-  DataStore.observeQuery(
-    Recipes,
-    (recipe) => recipe.level.contains("Novice")
-  ).subscribe(snapshot => {
-    const { items, isSynced } = snapshot;
-    setEasyData(items);
-  });
-  DataStore.observeQuery(
-    Recipes,
-    (recipe) => recipe.peopleNum.eq(1)
-  ).subscribe(snapshot => {
-    const { items, isSynced } = snapshot;
-    setSingleData(items);
-  });
-  DataStore.observeQuery(
-    Recipes,
-    (recipe) => recipe.method.eq("BAKE")
-  ).subscribe(snapshot => {
-    const { items, isSynced } = snapshot;
-    setBakeData(items);
-  });
-  
+  queries.queryData({limit:120},["beginner"],easyData,setEasyData);
+  queries.queryData({limit:120},["single"],singleData,setSingleData);
+  queries.queryData({limit:120},["bake"],bakeData,setBakeData);  
  }
  useEffect(() => {
-  // DataStore.observeQuery(
-  //   Recipes
-  // ).subscribe(snapshot => {
-  //   const { items, isSynced } = snapshot;
-  //   // console.log(`Recipes count: ${items.length}, isSynced: ${isSynced}`);
-  //   if(items.length>0){
-  //     setData(items);
-  //   }
-  // });
-  API.graphql({
-    query: queries.data(100)
-  }).then((data)=>{
-    console.log(data);
-  });
-  getData();
+  if(data.length<10 
+    || easyData.length < 10 
+    || singleData.length < 3 
+    || bakeData.length < 10)
+  {
+    console.log("a")
+    queries.queryData({limit:60},[],data,setData);
+    getData();
+  }
+    
  }, []);
+
  useEffect(() => {
    if (dbUser?.id) {
      DataStore.query(Recipes, (recipe) => recipe.userID.eq(dbUser?.id)).then(
@@ -107,6 +73,13 @@ function getData(d){
      );
    }
  }, [dbUser]);
+ useEffect(()=>{
+  Object.getOwnPropertyNames(fullLoad).forEach(prop => {
+    if(fullLoad[prop] && datas[prop].length < 200){
+      queries.queryAll(prop,setters[prop]);
+    }
+  });
+ },[fullLoad])
 
 
  return (
@@ -127,6 +100,8 @@ function getData(d){
        userData,
        dataSize,
        setDataSize,
+       fullLoad,
+       setFullLoad
      }}
    >
      {children}
